@@ -1,0 +1,1 @@
+window.SITE_META={"poems":57676,"open_poems":57607,"supplements":66,"poets":3658,"poets_with_life":3657,"annotated":5870,"books":19,"chapters":505,"source_replacement_chars":25,"matched":{"author_title":16132},"commentary_notes":19151,"commentary_poems":5379,"commentary_new_poems":2081,"commentary_quoted_notes":219,"commentary_quoted_poems":203};

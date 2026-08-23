@@ -1,0 +1,7 @@
+# 本地开发全量依赖。CI 只需 requirements-build.txt（构建与校验链路的最小集）。
+-r requirements-build.txt
+
+# 以下仅历史数据抓取与转换脚本需要，CI 不安装。
+pypinyin>=0.50,<1
+# 非 Windows 系统运行 scripts/import_docs.py 时用于繁体转简体。
+opencc-python-reimplemented>=0.1.7,<1

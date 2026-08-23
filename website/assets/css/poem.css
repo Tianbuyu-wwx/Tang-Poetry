@@ -1,0 +1,845 @@
+/* ============================================================
+   唐诗三百首 · 共享样式 · 水墨写意风格
+   依据 brand-spec.md 风格 A
+   所有诗页面 link 此文件
+   ============================================================ */
+
+:root {
+  --paper: #faf6ed;
+  --paper-deep: #f3ecdb;
+  --paper-warm: #f7f0db;
+  --ink: #1a1a1a;
+  --ink-deep: #0a0a0a;
+  --ink-light: #7a7a7a;
+  --ink-faint: #b8b3a6;
+  --cinnabar: #a83232;
+  --cinnabar-deep: #7a2828;
+  --cinnabar-bright: #c44040;
+  --gold: #9c7a3a;
+  --rule: rgba(26,26,26,0.12);
+  --rule-strong: rgba(26,26,26,0.22);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", "宋体", serif;
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+
+/* 宣纸肌理 */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(168,50,50,0.025), transparent 40%),
+    radial-gradient(ellipse at 85% 80%, rgba(26,26,26,0.04), transparent 50%),
+    radial-gradient(circle at 60% 40%, rgba(0,0,0,0.015), transparent 70%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.06 0'/></filter><rect width='400' height='400' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+/* ========== 顶部页眉 ========== */
+.topbar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.2rem 3rem;
+  border-bottom: 1px solid var(--rule);
+  background: linear-gradient(180deg, var(--paper) 0%, rgba(250,246,237,0.92) 100%);
+  backdrop-filter: blur(6px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: var(--ink);
+  justify-self: start;
+}
+
+.logo-seal {
+  width: 48px;
+  height: 48px;
+  background: var(--cinnabar);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.18),
+    inset 0 0 0 3px var(--cinnabar),
+    0 2px 6px rgba(122,40,40,0.25);
+  transform: rotate(-1.5deg);
+}
+.logo-seal::before {
+  content: "";
+  position: absolute; inset: 4px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 2px;
+}
+.logo-seal span {
+  font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", serif;
+  font-size: 28px;
+  color: var(--paper);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+  text-shadow: 0 1px 0 rgba(122,40,40,0.4);
+}
+
+.logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+.logo-text .t1 {
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--ink-deep);
+}
+.logo-text .t2 {
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-light);
+  text-transform: uppercase;
+}
+
+.topbar-center {
+  text-align: center;
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--ink-light);
+  justify-self: center;
+}
+.topbar-center .crumb { display: inline-flex; gap: 0.7rem; align-items: center; }
+.topbar-center .crumb a {
+  color: var(--ink-light);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+.topbar-center .crumb a:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+.topbar-center .crumb .sep { color: var(--ink-faint); }
+.topbar-center .crumb > span:last-child {
+  color: var(--ink-deep);
+  font-weight: 500;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  justify-self: end;
+}
+.topbar-right .nav-link {
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 4px;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--rule-strong);
+  background: rgba(255,255,255,0.5);
+  transition: all 0.2s;
+}
+.topbar-right .nav-link:hover {
+  color: var(--cinnabar);
+  border-color: var(--cinnabar);
+  background: rgba(168,50,50,0.05);
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    grid-template-columns: auto auto;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+  }
+  .topbar-center { display: none; }
+}
+
+/* ========== 主版心 ========== */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 3rem 5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 4rem;
+}
+
+article.poem { min-width: 0; }
+
+/* —— 诗题区 —— */
+.poem-header {
+  position: relative;
+  padding-bottom: 2.5rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.poem-header::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 60px; height: 2px;
+  background: var(--cinnabar);
+}
+
+.poem-title {
+  font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", "楷体", serif;
+  font-size: 76px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--ink-deep);
+  letter-spacing: 8px;
+  margin-bottom: 1.2rem;
+}
+
+.poem-byline {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: 2px;
+}
+.poem-byline .dynasty { color: var(--ink-light); font-size: 14px; }
+.poem-byline .author { font-size: 22px; color: var(--ink-deep); }
+
+.poem-meta {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  letter-spacing: 1px;
+}
+.poem-meta .meta-item { display: flex; align-items: baseline; gap: 0.5rem; }
+.poem-meta .meta-label {
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+.poem-meta .meta-value { color: var(--ink); }
+
+/* —— 诗原文 —— */
+.poem-text {
+  position: relative;
+  margin: 3rem 0 4rem;
+  padding: 2.5rem 3rem 2.5rem 0;
+}
+.poem-text::before {
+  content: "";
+  position: absolute;
+  left: -28px; top: 8px;
+  width: 14px; height: 14px;
+  background: var(--ink-deep);
+  border-radius: 50%;
+  box-shadow: 0 0 18px 4px rgba(26,26,26,0.08);
+}
+
+.poem-text .verse {
+  font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", "楷体", serif;
+  font-size: 30px;
+  line-height: 2.1;
+  color: var(--ink-deep);
+  letter-spacing: 4px;
+  text-wrap: pretty;
+}
+.poem-text .verse p { margin-bottom: 0.4rem; }
+.poem-text .verse p:last-child { margin-bottom: 0; }
+.poem-text .verse p.stanza-gap { height: 0.7rem; margin: 0; }
+.poem-text .verse .emph { color: var(--ink-deep); }
+
+/* —— 章节通用 —— */
+.section { margin: 2.8rem 0; }
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 22px;
+  color: var(--ink-deep);
+  letter-spacing: 4px;
+  margin-bottom: 1.4rem;
+  font-weight: 700;
+}
+.section-title::before {
+  content: "";
+  width: 22px; height: 22px;
+  background: var(--cinnabar);
+  border-radius: 2px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1.5px var(--paper);
+}
+.section-title .en {
+  margin-left: 0.5rem;
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.section-body {
+  font-family: "Noto Serif SC", "STSong", serif;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--ink);
+  text-align: justify;
+  text-justify: inter-character;
+}
+.section-body p { margin-bottom: 1.1rem; text-indent: 2em; }
+.section-body p:last-child { margin-bottom: 0; }
+
+/* —— 注释 —— */
+.notes-list {
+  list-style: none;
+  counter-reset: note;
+  font-family: "Noto Serif SC", serif;
+  font-size: 15px;
+  line-height: 1.95;
+}
+.notes-list li {
+  counter-increment: note;
+  position: relative;
+  padding-left: 3.2rem;
+  margin-bottom: 0.85rem;
+  color: var(--ink);
+}
+.notes-list li::before {
+  content: counter(note, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: 2px;
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 13px;
+  color: var(--cinnabar);
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--cinnabar);
+  padding-bottom: 1px;
+}
+.notes-list .term {
+  font-weight: 700;
+  color: var(--ink-deep);
+  margin-right: 0.5rem;
+}
+.notes-list .note-sentence {
+  display: inline;
+  margin-right: 0.35rem;
+}
+.notes-list .note-sentence::after {
+  content: "·";
+  display: inline-block;
+  margin-left: 0.2rem;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.classical-intro {
+  margin: -0.25rem 0 1.25rem;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid rgba(168, 50, 50, 0.55);
+  background: rgba(168, 50, 50, 0.045);
+  color: var(--ink-light);
+  font-family: "Noto Serif SC", "STSong", serif;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.classical-more {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+  padding-top: 0.8rem;
+}
+
+.classical-more summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--cinnabar-deep);
+  font-family: "Noto Serif SC", serif;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.classical-more[open] summary { margin-bottom: 1rem; }
+
+/* —— 赏析 —— */
+.appreciation .source-note {
+  background: rgba(168,50,50,0.06);
+  border-left: 2px solid var(--cinnabar);
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.6rem;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-light);
+  letter-spacing: 0.5px;
+}
+.appreciation .source-note strong {
+  color: var(--cinnabar-deep);
+  font-weight: 700;
+  margin-right: 0.4rem;
+}
+
+.appreciation .body p {
+  margin-bottom: 1.1rem;
+  text-indent: 2em;
+  text-align: justify;
+}
+.appreciation .body p:first-child::first-letter {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 2.4em;
+  float: left;
+  line-height: 0.95;
+  padding: 0.1em 0.12em 0 0;
+  color: var(--cinnabar);
+  font-weight: 700;
+}
+
+/* —— 名句 —— */
+.famous-lines {
+  background: linear-gradient(135deg, rgba(168,50,50,0.04), rgba(168,50,50,0.02));
+  border: 1px solid rgba(168,50,50,0.18);
+  padding: 1.8rem 2rem;
+  position: relative;
+}
+.famous-lines::before, .famous-lines::after {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  background: var(--cinnabar);
+}
+.famous-lines::before { top: -6px; left: -6px; }
+.famous-lines::after { bottom: -6px; right: -6px; }
+
+.famous-lines .line {
+  font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", serif;
+  font-size: 22px;
+  color: var(--ink-deep);
+  letter-spacing: 3px;
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.famous-lines .line:last-child { margin-bottom: 0; }
+.famous-lines .line .text {
+  display: block;
+  text-wrap: pretty;
+  word-break: break-word;
+}
+.famous-lines .line .gloss {
+  display: block;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  letter-spacing: 1px;
+  line-height: 1.6;
+  margin: 0.3rem 0 0.8rem 1.2rem;
+  padding-left: 0.8rem;
+  border-left: 2px solid rgba(168,50,50,0.25);
+}
+
+.mark-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--cinnabar);
+  border-radius: 50%;
+  vertical-align: middle;
+  margin: 0 4px 4px 0;
+  flex-shrink: 0;
+}
+
+/* —— 出处 —— */
+.sources-list {
+  list-style: none;
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  line-height: 1.95;
+  color: var(--ink-light);
+}
+.sources-list li {
+  padding-left: 1.6rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+.sources-list li::before {
+  content: "◇";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--ink-faint);
+  font-size: 10px;
+}
+.sources-list .work {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ========== 诗人侧栏 ========== */
+aside.poet-aside {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.poet-card {
+  position: relative;
+  padding: 1.8rem 1.5rem 1.5rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(250,246,237,0.4));
+  border: 1px solid var(--rule);
+}
+.poet-card::before {
+  content: attr(data-seal-char);
+  position: absolute;
+  top: -14px; right: 16px;
+  width: 36px; height: 36px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.3), 0 2px 6px rgba(122,40,40,0.25);
+  transform: rotate(2deg);
+}
+
+.poet-card .label {
+  font-family: "Noto Serif SC", serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.poet-card .name {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 32px;
+  color: var(--ink-deep);
+  letter-spacing: 4px;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.poet-card .name-en {
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--ink-light);
+  margin-bottom: 1.2rem;
+}
+.poet-card .summary {
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: justify;
+  margin-bottom: 1.2rem;
+}
+.poet-card .expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  color: var(--cinnabar);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--cinnabar);
+  padding: 4px 0;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: color 0.2s;
+}
+.poet-card .expand-btn:hover { color: var(--cinnabar-deep); }
+.poet-card .expand-btn .arrow { transition: transform 0.2s; }
+.poet-card .expand-btn.open .arrow { transform: rotate(180deg); }
+
+/* 浮窗 */
+.poet-modal-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(26,26,26,0.4);
+  z-index: 50;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  backdrop-filter: blur(2px);
+}
+.poet-modal-backdrop.open { display: flex; }
+body.modal-open { overflow: hidden; }
+.poet-modal {
+  background: var(--paper);
+  max-width: 640px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+  padding: 2.5rem 3rem;
+  border: 1px solid var(--rule);
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  outline: none;
+}
+.poet-modal .close {
+  position: absolute;
+  top: 1rem; right: 1.2rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-light);
+  width: 32px; height: 32px;
+  cursor: pointer;
+  font-family: serif;
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.2s;
+}
+.poet-modal .close:hover { border-color: var(--cinnabar); color: var(--cinnabar); }
+.poet-modal h3 {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 36px;
+  color: var(--ink-deep);
+  letter-spacing: 4px;
+  margin-bottom: 0.4rem;
+}
+.poet-modal .sub {
+  font-family: "Noto Serif SC", serif;
+  font-size: 13px;
+  color: var(--ink-light);
+  letter-spacing: 2px;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.poet-modal .life {
+  font-family: "Noto Serif SC", serif;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--ink);
+  text-align: justify;
+}
+.poet-modal .life p { margin-bottom: 1rem; text-indent: 2em; }
+.poet-modal .life p:last-child { margin-bottom: 0; }
+
+/* 同卷诗作 */
+.same-poet {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--rule);
+}
+.same-poet .label {
+  font-family: "Noto Serif SC", serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.same-poet ul { list-style: none; }
+.same-poet li {
+  padding: 0.4rem 0;
+  border-bottom: 1px dotted var(--rule);
+}
+.same-poet li:last-child { border-bottom: none; }
+.same-poet a {
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 16px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  transition: color 0.2s;
+}
+.same-poet a:hover { color: var(--cinnabar); }
+.same-poet a.current { color: var(--cinnabar); font-weight: 700; }
+.same-poet a .genre {
+  font-family: "Noto Serif SC", serif;
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+}
+.same-poet .all-works {
+  display: inline-block;
+  margin-top: 1rem;
+  font: 12px "Noto Serif SC", serif;
+  color: var(--cinnabar);
+  letter-spacing: 1px;
+}
+
+/* 翻页 */
+.pager {
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.pager a {
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0;
+  transition: color 0.2s;
+}
+.pager .nav-label {
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+.pager .nav-title {
+  font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+  font-size: 20px;
+  color: var(--ink-deep);
+  letter-spacing: 3px;
+}
+.pager a:hover .nav-title { color: var(--cinnabar); }
+.pager a.next { text-align: right; align-items: flex-end; }
+
+/* 页脚 */
+footer.site {
+  position: relative;
+  z-index: 1;
+  margin-top: 3rem;
+  padding: 2.5rem 3rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  color: var(--ink-light);
+  letter-spacing: 1px;
+  line-height: 1.9;
+}
+footer.site .seal-line {
+  display: inline-flex; align-items: center; gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+footer.site .mini-seal {
+  width: 18px; height: 18px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  display: inline-grid; place-items: center;
+  font-family: "Ma Shan Zheng", serif;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--cinnabar);
+  background: rgba(250,246,237,0.92);
+  color: var(--cinnabar);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 90;
+  box-shadow: 0 4px 14px rgba(122,40,40,0.18);
+  transition: all 0.25s;
+  display: none;
+}
+.back-to-top:hover, .back-to-top:focus-visible {
+  background: var(--cinnabar);
+  color: var(--paper);
+  transform: translateY(-3px);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 打印样式 */
+@media print {
+  .topbar, footer.site, .footer, .back-to-top, .poet-aside, .same-poet, .reader-nav, .license, .works-actions, .list-more, .load-more, .filter-row, .idx-actions { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  body::before { display: none !important; }
+  .page { grid-template-columns: 1fr !important; max-width: 100% !important; padding: 0 !important; }
+  .poem-title { font-size: 28pt !important; }
+  .poem-text .verse { font-size: 14pt !important; line-height: 1.8 !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+  .section-body p, .poet-bio p, .reader-text p { text-indent: 2em !important; }
+}
+
+/* 响应式 */
+@media (max-width: 980px) {
+  .page { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 1.5rem 3rem; }
+  .topbar { padding: 1.2rem 1.5rem; grid-template-columns: auto 1fr; }
+  .topbar-right { display: none; }
+  .topbar-center { display: none; }
+  .poem-title { font-size: 54px; letter-spacing: 6px; }
+  .poem-text .verse { font-size: 24px; letter-spacing: 3px; }
+  .poem-text { padding-left: 0; }
+  .poem-text::before { left: -18px; }
+  .famous-lines .line { font-size: 18px; }
+  aside.poet-aside { position: static; }
+}
+@media (max-width: 560px) {
+  .poem-title { font-size: 42px; }
+  .poem-text .verse { font-size: 20px; }
+  .section-title { font-size: 18px; }
+  .pager { grid-template-columns: 1fr; }
+  .pager a.next { text-align: left; align-items: flex-start; }
+}
+
+/* 移动端：禁用 sticky hover 的位移/阴影，保留 :active 按压反馈 */
+@media (hover: none) {
+  .idx-card:hover,
+  .book-card:hover,
+  .result-card:hover,
+  .cta-center:hover,
+  .cta-left:hover,
+  .cta-right:hover,
+  .back-to-top:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .idx-card:active,
+  .book-card:active,
+  .result-card:active,
+  .filter-chip:active,
+  .search-box .clear-btn:active,
+  .load-more:active,
+  .list-more:active,
+  .topbar nav a:active,
+  .topbar-right .nav-link:active,
+  .topbar-center .crumb a:active,
+  .poet-card .expand-btn:active,
+  .poet-modal .close:active,
+  .same-poet a:active,
+  .pager a:active .nav-title,
+  .back-to-top:active {
+    opacity: 0.75;
+  }
+}

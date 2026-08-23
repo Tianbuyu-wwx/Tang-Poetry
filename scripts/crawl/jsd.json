@@ -1,0 +1,17 @@
+{
+	"type": "gh",
+	"name": "chinese-poetry/chinese-poetry",
+	"tags": {},
+	"versions": [
+		{
+			"version": "0.1",
+			"links": {
+				"self": "https://data.jsdelivr.com/v1/packages/gh/chinese-poetry/chinese-poetry@0.1",
+				"stats": "https://data.jsdelivr.com/v1/stats/packages/gh/chinese-poetry/chinese-poetry@0.1"
+			}
+		}
+	],
+	"links": {
+		"stats": "https://data.jsdelivr.com/v1/stats/packages/gh/chinese-poetry/chinese-poetry"
+	}
+}

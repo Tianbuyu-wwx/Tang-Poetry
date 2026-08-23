@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv_*/
+.pytest_cache/
+
+# OCR 与本地测试产物
+/_ocr*.png
+/_gpu*.png
+/_gpusmoke*.png
+/_smoke*.png
+/_dml*.png
+/_dl.png
+/_t.png
+/scripts/crawl/_ocr_pages/
+/scripts/crawl/_ocr_smoke/
+/scripts/crawl/_ocr_gpu_smoke/
+
+# 抓取调试快照；tang_dict/ 为维基文库 EPUB 解包产物（约千个 HTML），已从 git 历史移除并忽略，仅本地保留追溯
+/scripts/crawl/*.html
+/scripts/crawl/tang_dict/
+
+# 编辑器与系统文件
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# 临时探索脚本（已归档至 scripts/_archive/experiments）
+scripts/tmp_*
+
+# 内部工作工具数据与损坏的旧 git 元数据（不入公开仓库）
+.workbuddy/
+.git.broken-*/

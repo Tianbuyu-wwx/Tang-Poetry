@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>典籍资料 · 石湖诗社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/css/poem.css?v=13" as="style">
+<link rel="stylesheet" href="assets/css/poem.css?v=13">
+<style>
+  .library { max-width: 1180px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
+  .library-head { text-align: center; margin-bottom: 2.5rem; }
+  .library-head h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 56px; letter-spacing: 8px; color: var(--ink-deep); }
+  .library-head p { max-width: 760px; margin: .8rem auto 0; font-family: "Noto Serif SC",serif; line-height: 1.9; color: var(--ink-light); }
+  .tools { display: grid; grid-template-columns: 220px 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .tools select,.tools input { width: 100%; padding: .9rem 1rem; border: 1px solid var(--rule-strong); background: rgba(255,255,255,.65); color: var(--ink); font: 15px "Noto Serif SC",serif; outline: none; }
+  .tools select:focus,.tools input:focus { border-color: var(--cinnabar); }
+  .search-help { margin: -1.2rem 0 1.4rem; color: var(--ink-faint); font: 12px "Noto Serif SC",serif; }
+  .summary { margin-bottom: 1.4rem; color: var(--ink-light); font: 13px "Noto Serif SC",serif; }
+  .book-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 1.2rem; }
+  .book-card { display: block; padding: 1.4rem; border: 1px solid var(--rule); background: rgba(255,255,255,.45); color: var(--ink); text-decoration: none; transition: .2s; }
+  .book-card:hover { border-color: var(--cinnabar); transform: translateY(-2px); box-shadow: 0 7px 20px rgba(122,40,40,.1); }
+  .book-card h2 { font: 25px "ZCOOL XiaoWei","STKaiti",serif; letter-spacing: 3px; color: var(--ink-deep); margin-bottom: .5rem; }
+  .book-card .meta { font: 11px "Noto Serif SC",serif; color: var(--cinnabar); letter-spacing: 1px; margin-bottom: .8rem; }
+  .book-card p { font: 13px/1.8 "Noto Serif SC",serif; color: var(--ink-light); }
+  .result { display: block; padding: 1.1rem 1.3rem; margin-bottom: .8rem; border-left: 2px solid var(--cinnabar); background: rgba(255,255,255,.48); text-decoration: none; color: var(--ink); }
+  .result h3 { font: 18px "ZCOOL XiaoWei","STKaiti",serif; color: var(--ink-deep); margin-bottom: .45rem; }
+  .result p { font: 13px/1.8 "Noto Serif SC",serif; color: var(--ink-light); }
+  mark { color: var(--cinnabar); background: rgba(168,50,50,.1); }
+  .reader-head { padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+  .reader-head h1 { font: 42px "Ma Shan Zheng","STKaiti",serif; letter-spacing: 6px; color: var(--ink-deep); }
+  .reader-head .meta { font: 12px/1.8 "Noto Serif SC",serif; color: var(--ink-light); margin-top: .7rem; }
+  .reader-text { font: 16px/2.15 "Noto Serif SC","Songti SC",serif; color: var(--ink); text-align: justify; }
+  .reader-text p { margin-bottom: 1.2em; text-indent: 2em; }
+  .reader-text p:last-child { margin-bottom: 0; }
+  .reader-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 2rem 0; }
+  .reader-nav a,.back { color: var(--cinnabar); text-decoration: none; font: 14px "Noto Serif SC",serif; }
+  .license { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font: 12px/1.8 "Noto Serif SC",serif; color: var(--ink-faint); }
+  @media (max-width:680px){ .library{padding:2rem 1.2rem 3rem}.tools{grid-template-columns:1fr}.library-head h1{font-size:44px}.reader-head h1{font-size:34px} }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="index.html"><div class="logo-seal"><span data-brand="hero-seal">石</span></div><div class="logo-text"><div class="t1" data-brand="nav-name">石湖诗社</div><div class="t2" data-brand="nav-en">Shihu Poetry Society</div></div></a>
+  <div class="topbar-center"><div class="crumb"><a href="index.html">首页</a><span class="sep">›</span><span>典籍资料</span></div></div>
+  <div class="topbar-right"><a class="nav-link" href="poets.html">诗人</a><a class="nav-link" href="members.html">社员</a><a class="nav-link" href="navigation.html">检索</a><a class="nav-link" href="society.html">社务</a></div>
+</header>
+<main class="library" id="library"></main>
+<footer class="site"><div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div><div>古代原著为公版；维基文库录入依 CC BY-SA 4.0 使用</div><div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div></footer>
+<script src="assets/js/sources-index.js?v=13" defer></script>
+<script src="assets/js/page-sources.js?v=13" defer></script>
+<script>
+(function(){
+  "use strict";
+  if(window.OPTIMIZED_SOURCES_PAGE)return;
+  var books=window.SOURCES_DATA||[], root=document.getElementById("library");
+  function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function param(n){var m=new RegExp("[?&]"+n+"=([^&]*)").exec(location.search);return m?decodeURIComponent(m[1]):"";}
+  function link(book,chapter){return "sources.html?book="+encodeURIComponent(book.id)+"&chapter="+chapter;}
+  function snippet(text,q){var at=text.indexOf(q),start=Math.max(0,at-55),end=Math.min(text.length,at+q.length+90),part=text.slice(start,end);return (start?"…":"")+part+(end<text.length?"…":"");}
+  function highlighted(text,q){if(!q)return esc(text);return text.split(q).map(esc).join("<mark>"+esc(q)+"</mark>");}
+  function renderReader(book,chapterIndex){
+    var chapter=book.chapters[chapterIndex]; if(!chapter){renderHome();return;}
+    var prev=chapterIndex>0?'<a href="'+link(book,chapterIndex-1)+'">← 上一章</a>':'<span></span>';
+    var next=chapterIndex+1<book.chapters.length?'<a href="'+link(book,chapterIndex+1)+'">下一章 →</a>':'<span></span>';
+    root.innerHTML='<a class="back" href="sources.html">← 返回典籍检索</a><div class="reader-head"><h1>'+esc(book.title)+' · '+esc(chapter.title)+'</h1><div class="meta">'+esc(book.author)+' · '+esc(book.edition)+' · 第 '+(chapterIndex+1)+' / '+book.chapters.length+' 章</div></div><div class="reader-nav">'+prev+next+'</div><article class="reader-text">'+esc(chapter.text)+'</article><div class="reader-nav">'+prev+next+'</div><div class="license">来源：<a href="'+esc(book.sourceUrl)+'" target="_blank" rel="noopener">'+esc(book.source)+'</a> · '+esc(book.license)+'。开放录入可能存在异体字、断句或底本问题，引用前请回查原页面与影印底本。</div>';
+    document.title=chapter.title+' · '+book.title+' · '+(window.BRAND?window.BRAND.name:'石湖诗社');
+  }
+  function renderHome(){
+    var options='<option value="all">全部典籍</option>',cards='';
+    for(var i=0;i<books.length;i++){var b=books[i];options+='<option value="'+esc(b.id)+'">'+esc(b.title)+'</option>';cards+='<a class="book-card" href="'+link(b,0)+'"><h2>'+esc(b.title)+'</h2><div class="meta">'+esc(b.author)+' · '+b.chapters.length+' 章</div><p>'+esc(b.description)+'</p></a>';}
+    root.innerHTML='<div class="library-head"><h1>典籍资料</h1><p>全文检索 '+books.length+' 部公版唐诗选本、诗话、传记与古代注评。这里保留古籍原意与来源，不将文言评点冒充现代白话注释。</p></div><div class="tools"><select id="bookFilter">'+options+'</select><input id="sourceSearch" placeholder="搜索诗人、诗题、诗句或评语…" autocomplete="off"></div><div class="summary" id="sourceSummary">共 '+books.length+' 部典籍</div><div id="sourceResults" class="book-grid">'+cards+'</div>';
+    var input=document.getElementById("sourceSearch"),filter=document.getElementById("bookFilter"),results=document.getElementById("sourceResults"),summary=document.getElementById("sourceSummary"),timer=null;
+    function search(){var q=input.value.trim(),selected=filter.value,hits=[];if(q.length<2){renderCards(selected);return;}for(var i=0;i<books.length;i++){var b=books[i];if(selected!=="all"&&selected!==b.id)continue;for(var c=0;c<b.chapters.length;c++){var ch=b.chapters[c],at=ch.text.indexOf(q);if(at>=0||ch.title.indexOf(q)>=0){hits.push({b:b,c:c,ch:ch,at:at});if(hits.length>=100)break;}}if(hits.length>=100)break;}var html='';for(var h=0;h<hits.length;h++){var x=hits[h],text=x.at>=0?snippet(x.ch.text,q):x.ch.title;html+='<a class="result" href="'+link(x.b,x.c)+'"><h3>'+esc(x.b.title)+' · '+highlighted(x.ch.title,q)+'</h3><p>'+highlighted(text,q)+'</p></a>';}results.className="";results.innerHTML=html||'<p class="summary">未找到匹配内容。</p>';summary.textContent='找到 '+hits.length+' 个章节'+(hits.length===100?'（仅显示前 100 项）':'');}
+    function renderCards(selected){var html='',count=0;for(var i=0;i<books.length;i++){var b=books[i];if(selected!=="all"&&selected!==b.id)continue;count++;html+='<a class="book-card" href="'+link(b,0)+'"><h2>'+esc(b.title)+'</h2><div class="meta">'+esc(b.author)+' · '+b.chapters.length+' 章</div><p>'+esc(b.description)+'</p></a>';}results.className="book-grid";results.innerHTML=html;summary.textContent='共 '+count+' 部典籍';}
+    input.addEventListener("input",function(){clearTimeout(timer);timer=setTimeout(search,180);});filter.addEventListener("change",search);
+  }
+  var bookId=param("book"),chapter=parseInt(param("chapter"),10),book=null;for(var i=0;i<books.length;i++)if(books[i].id===bookId)book=books[i];if(book&&!isNaN(chapter))renderReader(book,chapter);else renderHome();
+})();
+</script>
+<script src="assets/js/register-sw.js?v=13" defer></script>
+<script src="assets/js/web-vitals.js?v=13" defer></script>
+<script src="assets/js/lazy-load.js?v=13" defer></script>
+<script src="assets/js/back-to-top.js?v=13" defer></script>
+</body>
+</html>

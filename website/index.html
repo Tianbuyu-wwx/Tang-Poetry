@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>石湖诗社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf6ed;
+    --paper-deep: #f3ecdb;
+    --ink: #1a1a1a;
+    --ink-deep: #0a0a0a;
+    --ink-light: #7a7a7a;
+    --ink-faint: #b8b3a6;
+    --cinnabar: #a83232;
+    --cinnabar-deep: #7a2828;
+    --gold: #9c7a3a;
+    --rule: rgba(26,26,26,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif SC", "STSong", "SimSun", "宋体", serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(168,50,50,0.04), transparent 50%),
+      radial-gradient(ellipse at 85% 80%, rgba(26,26,26,0.05), transparent 55%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.06 0'/></filter><rect width='400' height='400' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+
+  /* 远山墨痕装饰 */
+  .mountain-bg {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 30vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'><path d='M0,300 L0,200 Q100,150 200,180 T400,160 Q500,120 600,150 T800,130 Q900,100 1000,140 T1200,150 L1200,300 Z' fill='%231a1a1a'/><path d='M0,300 L0,250 Q150,210 300,230 T600,220 Q750,190 900,210 T1200,220 L1200,300 Z' fill='%231a1a1a' opacity='0.6'/></svg>") no-repeat bottom center / 100% 100%;
+  }
+
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 4rem 2rem;
+  }
+
+  .hero-inner {
+    text-align: center;
+    max-width: 900px;
+    position: relative;
+  }
+
+  /* 入场动画序列 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: reveal 1.4s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .reveal-1 { animation-delay: 0.2s; }
+  .reveal-2 { animation-delay: 0.6s; }
+  .reveal-3 { animation-delay: 1.0s; }
+  .reveal-4 { animation-delay: 1.4s; }
+  .reveal-5 { animation-delay: 1.8s; }
+  .reveal-6 { animation-delay: 2.2s; }
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LOGO */
+  .hero-logo {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .hero-seal {
+    width: 120px;
+    height: 120px;
+    background: var(--cinnabar);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    box-shadow:
+      inset 0 0 0 3px rgba(255,255,255,0.18),
+      inset 0 0 0 4px var(--cinnabar),
+      0 8px 30px rgba(122,40,40,0.3);
+    transform: rotate(-2deg);
+    margin: 0 auto;
+  }
+  .hero-seal::before {
+    content: "";
+    position: absolute; inset: 8px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+  }
+  .hero-seal .ch {
+    font-family: "Ma Shan Zheng", "STKaiti", serif;
+    font-size: 78px;
+    color: var(--paper);
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 2px 0 rgba(122,40,40,0.4);
+  }
+  .hero-logo-label {
+    margin-top: 1rem;
+    font-family: "Noto Serif SC", serif;
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--ink-light);
+    text-transform: uppercase;
+  }
+
+  /* 主标题 */
+  .hero-title {
+    font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", serif;
+    font-size: clamp(72px, 14vw, 168px);
+    line-height: 0.95;
+    color: var(--ink-deep);
+    letter-spacing: 12px;
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+    text-shadow: 0 2px 0 rgba(255,255,255,0.4);
+  }
+  .hero-subtitle {
+    font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+    font-size: clamp(18px, 2.4vw, 26px);
+    letter-spacing: 8px;
+    color: var(--ink-light);
+    margin-bottom: 0.8rem;
+  }
+  .hero-en {
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 3.5rem;
+  }
+
+  /* 引诗 */
+  .hero-quote {
+    font-family: "Ma Shan Zheng", "STKaiti", serif;
+    font-size: clamp(20px, 2.8vw, 28px);
+    color: var(--ink);
+    letter-spacing: 6px;
+    line-height: 2;
+    margin-bottom: 0.6rem;
+    margin-top: 3rem;
+  }
+  .hero-quote-source {
+    font-family: "Noto Serif SC", serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 2px;
+    margin-bottom: 4rem;
+  }
+
+  /* 入口按钮 */
+  .hero-cta {
+    display: block;
+    margin-bottom: 3rem;
+  }
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: "ZCOOL XiaoWei", "STKaiti", serif;
+    font-size: 17px;
+    letter-spacing: 4px;
+    text-decoration: none;
+    padding: 1rem 2.2rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .cta-left { justify-self: end; }
+  .cta-center {
+    justify-self: center;
+    background: var(--cinnabar);
+    color: var(--paper);
+    border-color: var(--cinnabar);
+    padding: 1.15rem 2.6rem;
+    font-size: 18px;
+    letter-spacing: 6px;
+  }
+  .cta-right { justify-self: start; }
+  .cta-center:hover {
+    background: var(--cinnabar-deep);
+    border-color: var(--cinnabar-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(122,40,40,0.3);
+  }
+  .cta-left:hover, .cta-right:hover {
+    color: var(--cinnabar);
+    border-color: var(--cinnabar);
+  }
+  .about-mini {
+    display: inline-block;
+    margin-top: 1.1rem;
+    color: var(--ink-light);
+    font: 12px "ZCOOL XiaoWei", serif;
+    letter-spacing: 3px;
+    text-decoration: none;
+  }
+  .about-mini:hover { color: var(--cinnabar); }
+  .mini-links { display: flex; justify-content: center; align-items: center; gap: .9rem; }
+  .mini-links .sep { margin-top: 1.1rem; color: var(--rule-strong); font-size: 12px; }
+  .cta .arrow { transition: transform 0.3s; }
+  .cta:hover .arrow { transform: translateX(4px); }
+
+  @media (max-width: 600px) {
+    .cta-row {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    .cta-left, .cta-right, .cta-center { justify-self: center; }
+  }
+
+  /* 数据指标 */
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: "Ma Shan Zheng", serif;
+    font-size: 36px;
+    color: var(--cinnabar);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-family: "Noto Serif SC", serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-light);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  html { scroll-behavior: smooth; }
+  .back-to-top {
+    position: fixed; right: 1.5rem; bottom: 1.5rem;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--cinnabar); background: rgba(250,246,237,0.92);
+    color: var(--cinnabar); font-size: 20px; line-height: 1;
+    cursor: pointer; z-index: 90;
+    box-shadow: 0 4px 14px rgba(122,40,40,0.18);
+    transition: all 0.25s; display: none;
+  }
+  .back-to-top:hover, .back-to-top:focus-visible { background: var(--cinnabar); color: var(--paper); transform: translateY(-3px); }
+
+  @media print {
+    .hero-cta, .about-mini, .mini-links, .hero-stats, .back-to-top { display: none !important; }
+    body { background: #fff !important; color: #000 !important; }
+    body::before, .mountain-bg { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-logo reveal reveal-1">
+      <div class="hero-seal"><span class="ch" data-brand="hero-seal">石</span></div>
+      <div class="hero-logo-label" data-brand="hero-seal-label">Seal of Shihu</div>
+    </div>
+
+    <h1 class="hero-title reveal reveal-2" data-brand="hero-title">石湖诗社</h1>
+    <div class="hero-subtitle reveal reveal-3" data-brand="hero-subtitle">诗 集 珍 赏</div>
+    <div class="hero-en reveal reveal-3" data-brand="hero-en">Shihu Poetry Society · Classical &amp; Contemporary Verse</div>
+
+    <p class="hero-quote reveal reveal-4" id="heroQuote">
+      海内存知己，<br>天涯若比邻。
+    </p>
+    <p class="hero-quote-source reveal reveal-4" id="heroQuoteSource">—— 王勃《送杜少府之任蜀州》</p>
+
+    <div class="hero-cta reveal reveal-5">
+      <div class="cta-row">
+        <a class="cta cta-left" href="poets.html">
+          诗人索引
+        </a>
+        <a class="cta cta-center" href="navigation.html">
+          进入鉴赏 <span class="arrow">→</span>
+        </a>
+        <a class="cta cta-right" href="sources.html">
+          典籍资料
+        </a>
+      </div>
+      <div class="mini-links">
+        <a class="about-mini" href="members.html">社员名录</a>
+        <span class="sep">·</span>
+        <a class="about-mini" href="society.html">社务中心</a>
+        <span class="sep">·</span>
+        <a class="about-mini" href="about.html">关于本站</a>
+      </div>
+    </div>
+
+    <div class="hero-stats reveal reveal-6">
+      <div class="stat">
+        <div class="stat-num" id="statPoems">—</div>
+        <div class="stat-label">诗作</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statPoets">—</div>
+        <div class="stat-label">诗人</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statAnnotated">—</div>
+        <div class="stat-label">有注解</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statBooks">—</div>
+        <div class="stat-label">公版典籍</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="assets/js/site-meta.js?v=13" defer></script>
+<script src="assets/js/famous-lines.js?v=13" defer></script>
+<script>
+  // 等待 defer 脚本执行后再填充数据
+  document.addEventListener('DOMContentLoaded', function() {
+    var meta = window.SITE_META || {};
+    var ids = {statPoems: meta.poems, statPoets: meta.poets, statAnnotated: meta.annotated, statBooks: meta.books};
+    for (var k in ids) {
+      var el = document.getElementById(k);
+      if (el && ids[k] != null) el.textContent = ids[k].toLocaleString();
+    }
+
+    if (!window.FAMOUS_LINES || window.FAMOUS_LINES.length === 0) return;
+    var idx = Math.floor(Math.random() * window.FAMOUS_LINES.length);
+    var item = window.FAMOUS_LINES[idx];
+    var quoteEl = document.getElementById('heroQuote');
+    var sourceEl = document.getElementById('heroQuoteSource');
+    if (quoteEl && item.line) {
+      var line = item.line.replace(/，/g, '，<br>');
+      quoteEl.innerHTML = line;
+    }
+    if (sourceEl && item.source) {
+      sourceEl.textContent = item.source;
+    }
+  });
+</script>
+<script>
+  // 延迟加载非首屏装饰背景，避免阻塞首屏渲染
+  (function() {
+    function addMountainBg() {
+      var bg = document.createElement('div');
+      bg.className = 'mountain-bg';
+      document.body.insertBefore(bg, document.body.firstChild);
+    }
+    if (document.readyState === 'complete') addMountainBg();
+    else window.addEventListener('load', addMountainBg);
+  })();
+</script>
+<script src="assets/js/register-sw.js?v=13" defer></script>
+<script src="assets/js/web-vitals.js?v=13" defer></script>
+<script src="assets/js/lazy-load.js?v=13" defer></script>
+<script src="assets/js/back-to-top.js?v=13" defer></script>
+
+</body>
+</html>

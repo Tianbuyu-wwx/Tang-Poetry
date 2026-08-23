@@ -1,0 +1,6 @@
+# 构建与校验链路的最小依赖集（CI 只装这一份）。
+#
+# 覆盖范围：build_curated.py -> build_frontend_assets.py -> verify_all.py
+# 这条链路除 pyyaml 外全部使用标准库，因此 CI 冷启动无需编译任何扩展。
+# 抓取与历史数据转换脚本的依赖见 requirements.txt。
+pyyaml>=6,<7

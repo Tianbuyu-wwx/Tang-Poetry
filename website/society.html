@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=14"></script>
+<title>社务中心 · 石湖诗社</title>
+<meta name="description" content="石湖诗社社务中心：社课命题、社刊汇刊、公告活动与社员名录。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=14" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=14">
+<style>
+  .soc-page { max-width: 1080px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
+  .soc-head { text-align: center; margin-bottom: 2rem; }
+  .soc-head h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 56px; color: var(--ink-deep); letter-spacing: 8px; }
+  .soc-head .sub { font-family: "ZCOOL XiaoWei",serif; font-size: 14px; letter-spacing: 4px; color: var(--ink-light); margin-top: .6rem; }
+
+  .soc-intro {
+    max-width: 760px; margin: 0 auto 2.6rem; padding: 1.4rem 1.6rem;
+    border: 1px solid var(--rule); border-left: 3px solid var(--cinnabar);
+    background: rgba(255,255,255,.45);
+    font: 14px/2 "Noto Serif SC",serif; color: var(--ink); letter-spacing: 1px;
+  }
+
+  .soc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
+  .soc-card {
+    display: block; text-decoration: none; color: var(--ink);
+    padding: 1.8rem 1.6rem; border: 1px solid var(--rule); background: rgba(255,255,255,.42);
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .soc-card:hover, .soc-card:focus-visible {
+    border-color: var(--cinnabar); box-shadow: 0 6px 20px rgba(122,40,40,.10);
+    transform: translateY(-2px); outline: none;
+  }
+  .soc-card .ico {
+    width: 48px; height: 48px; border-radius: 4px; display: grid; place-items: center;
+    font-family: "Ma Shan Zheng",serif; font-size: 28px; color: var(--paper);
+    background: var(--cinnabar); margin-bottom: 1rem;
+  }
+  .soc-card h2 { font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 22px; letter-spacing: 3px; color: var(--ink-deep); margin-bottom: .5rem; }
+  .soc-card p { font: 13px/1.9 "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: .5px; }
+  .soc-card .more { display: inline-block; margin-top: .9rem; font: 12px "Noto Serif SC",serif; color: var(--cinnabar); letter-spacing: 2px; }
+
+  .soc-cta { text-align: center; margin-top: 2.8rem; display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+  .soc-cta a {
+    display: inline-block; padding: .6rem 1.6rem; text-decoration: none;
+    border: 1px solid var(--cinnabar); color: var(--cinnabar);
+    font: 13px "Noto Serif SC",serif; letter-spacing: 2px; transition: all .2s;
+  }
+  .soc-cta a:hover, .soc-cta a:focus-visible { background: var(--cinnabar); color: var(--paper); outline: none; }
+
+  @media (max-width: 600px){
+    .soc-page { padding: 2rem 1.2rem 3rem; }
+    .soc-head h1 { font-size: 40px; letter-spacing: 5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="nav-link" href="./poets.html">诗人</a>
+    <a class="nav-link" href="./members.html">社员</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="soc-page">
+  <div class="soc-head">
+    <h1>社务中心</h1>
+    <div class="sub">SHIHU SOCIETY AFFAIRS · 结社石湖</div>
+  </div>
+
+  <section class="soc-intro">
+    <p>石湖诗社以诗会友，主张「旧体新声」。社务中心汇集社课命题、社刊汇刊、公告活动与社员名录，凡社中日常，皆聚于此。社员可依课投交，读者可览刊闻诗。</p>
+  </section>
+
+  <div class="soc-grid">
+    <a class="soc-card" href="./lessons.html">
+      <div class="ico">课</div>
+      <h2>社课</h2>
+      <p>定期命题征集，有题、有限、有期。列各课题意与入选之作。</p>
+      <span class="more">进入社课 ›</span>
+    </a>
+    <a class="soc-card" href="./periodicals.html">
+      <div class="ico">刊</div>
+      <h2>社刊</h2>
+      <p>《石湖吟草》按辑汇刊，甄选社课佳作与同好唱和。</p>
+      <span class="more">进入社刊 ›</span>
+    </a>
+    <a class="soc-card" href="./news.html">
+      <div class="ico">告</div>
+      <h2>公告</h2>
+      <p>社课征稿、年会启事、刊物首发等社中资讯。</p>
+      <span class="more">查看公告 ›</span>
+    </a>
+    <a class="soc-card" href="./members.html">
+      <div class="ico">员</div>
+      <h2>社员名录</h2>
+      <p>在册社员小传与已上站作品，点姓名可览全貌。</p>
+      <span class="more">浏览社员 ›</span>
+    </a>
+  </div>
+
+  <div class="soc-cta">
+    <a href="./admin/" target="_blank" rel="noopener">社员投稿</a>
+    <a href="./about.html">关于本站</a>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div>
+  <div>社员作品版权归作者本人所有，经作者授权在本站展示</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/register-sw.js?v=14" defer></script>
+<script src="./assets/js/web-vitals.js?v=14" defer></script>
+<script src="./assets/js/back-to-top.js?v=14" defer></script>
+</body>
+</html>

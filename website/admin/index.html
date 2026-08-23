@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>投稿后台 · 石湖诗社</title>
+<style>
+  /* 后台加载期间的占位，避免白屏 */
+  #boot {
+    position: fixed; inset: 0; display: grid; place-items: center;
+    font: 14px/2 "Noto Serif SC", serif; color: #7a7a7a; letter-spacing: 2px;
+    background: #f5f1e8;
+  }
+  #boot .seal {
+    width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 4px;
+    background: #a83232; color: #f5f1e8; font-size: 30px;
+    display: grid; place-items: center;
+  }
+</style>
+</head>
+<body>
+<div id="boot">
+  <div style="text-align:center">
+    <div class="seal">石</div>
+    <div>石湖诗社 · 投稿后台</div>
+    <div style="font-size:12px">正在载入编辑器…</div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/decap-cms@^3.15.1/dist/decap-cms.js"></script>
+<script>
+  window.addEventListener("load", function () {
+    var boot = document.getElementById("boot");
+    if (boot) setTimeout(function () { boot.remove(); }, 1200);
+  });
+
+  /* 投稿成功后给作者的提示（Decap 事件钩子） */
+  if (window.CMS) {
+    window.CMS.registerEventListener({
+      name: "postSave",
+      handler: function () {
+        console.info("[石湖诗社] 稿件已保存。待社务审核合并后，重建站点即可上站。");
+      }
+    });
+  }
+</script>
+</body>
+</html>

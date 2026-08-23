@@ -1,0 +1,98 @@
+# 投稿校验：社员经投稿后台提交的 PR 在此过闸。
+#
+# 只读不写——本工作流不回写仓库、不部署，任何产物都留在 runner 上。
+# 除了跑通构建与两道校验门，它还会把稿件翻译成一份体检报告贴回 PR，
+# 让社长不必去读 diff 里的 YAML 就能判断这稿子能不能上。
+name: 投稿校验
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'website/**'
+      - 'scripts/**'
+      - 'requirements*.txt'
+      - '.github/workflows/verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: verify-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: 重建社库并校验
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+        with:
+          # 体检报告需要与基线分支比对，浅克隆拿不到 merge base
+          fetch-depth: 0
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: requirements-build.txt
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 安装构建依赖
+        run: python -m pip install --disable-pip-version-check --quiet -r requirements-build.txt
+
+      - name: 重建社库
+        run: python scripts/build_curated.py
+
+      - name: 数据校验门
+        run: python scripts/verify_all.py
+
+      - name: 脚本解析门
+        run: node scripts/verify_frontend.js
+
+      # 构建失败时同样出报告——投稿人最需要知道的恰恰是哪一步不合规
+      - name: 生成投稿体检报告
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          python scripts/review_submission.py \
+            --base "origin/${{ github.base_ref }}" \
+            --output "${RUNNER_TEMP}/review.md"
+          cat "${RUNNER_TEMP}/review.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 贴回 PR
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = `${process.env.RUNNER_TEMP}/review.md`;
+            if (!fs.existsSync(path)) {
+              core.info('无体检报告可贴（生成步骤未产出文件）。');
+              return;
+            }
+            const marker = '<!-- shihu-review-bot -->';
+            const body = `${marker}\n${fs.readFileSync(path, 'utf8')}`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
+            );
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+              core.info(`已更新体检报告评论 #${existing.id}`);
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+              core.info('已发布体检报告评论');
+            }

@@ -1,0 +1,133 @@
+# 构建并部署：稿件合入 main 后自动重建全站并上线。
+#
+# 产物策略（重要）：
+#   构建只要几秒且完全确定性，因此 CI 从 docs/ 重建后直接部署，不把产物塞回仓库。
+#   主数据 scripts/_work/poems-data.js 是 30 MB 的单行 JS，每回写一次就在仓库里
+#   压出一个约 11 MB 的新 blob；按投稿频次累计会迅速把仓库撑坏。
+#   唯一必须持久化的是 docs/curated/poem-ids.json——它把文件名钉到固定编号，
+#   丢了它新投稿就会挤掉既有作品的 URL。这个文件只有几百字节。
+#
+#   于是：仓库里的 website/ 产物仅供本地预览，可能落后于线上；
+#   线上以本工作流的构建结果为准，docs/ 是唯一事实源。
+name: 构建并部署
+
+on:
+  push:
+    # 本仓库主干名为 master，GitHub 新建仓库默认 main——两者都监听，
+    # 免得改名或迁移后工作流静默失效
+    branches: [main, master]
+    paths:
+      - 'docs/**'
+      - 'website/**'
+      - 'scripts/**'
+      - 'requirements*.txt'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+    inputs:
+      sync_artifacts:
+        description: '同时把构建产物回写仓库（单次约 11 MB，仅在需要对齐仓库与线上时勾选）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write      # 持久化 poem-ids.json
+  pages: write
+  id-token: write
+
+# 部署串行，避免两次合并同时上线导致后发先至
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 重建与校验
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 准备 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: requirements-build.txt
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 安装构建依赖
+        run: python -m pip install --disable-pip-version-check --quiet -r requirements-build.txt
+
+      - name: 重建社库
+        run: python scripts/build_curated.py
+
+      - name: 数据校验门
+        run: python scripts/verify_all.py
+
+      - name: 脚本解析门
+        run: node scripts/verify_frontend.js
+
+      # 编号注册表是 URL 稳定性的唯一凭据，必须回仓库
+      - name: 持久化作品编号注册表
+        run: |
+          if git diff --quiet -- docs/curated/poem-ids.json; then
+            echo "编号注册表无变化，跳过。"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/curated/poem-ids.json
+          git commit -m "chore: 持久化社员作品编号注册表 [skip ci]"
+          # 构建期间可能有新提交落到主干，rebase 后再推
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "编号注册表已更新："
+          cat docs/curated/poem-ids.json
+
+      - name: 回写构建产物（可选）
+        if: github.event_name == 'workflow_dispatch' && inputs.sync_artifacts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- website scripts/_work
+          if git diff --cached --quiet; then
+            echo "构建产物与仓库一致，无需回写。"
+            exit 0
+          fi
+          git commit -m "chore: 同步构建产物 [skip ci]"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      # 源码里 backend.repo 保持占位符，部署产物按当前仓库自动落名，
+      # 这样 fork 或改名都不需要手动改 config.yml
+      - name: 注入仓库信息到投稿后台配置
+        run: |
+          CONFIG=website/admin/config.yml
+          if [ -f "$CONFIG" ]; then
+            sed -i "s|your-org/shihu-poetry|${GITHUB_REPOSITORY}|g" "$CONFIG"
+            echo "投稿后台指向：$(grep -E '^\s+repo:' "$CONFIG" || true)"
+          fi
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 打包站点
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+
+  deploy:
+    name: 上线
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

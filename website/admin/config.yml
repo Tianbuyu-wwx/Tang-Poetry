@@ -1,0 +1,190 @@
+# ============================================================
+# 石湖诗社 · 投稿后台（Decap CMS）配置
+# ------------------------------------------------------------
+# 本文件描述「社员在浏览器里填表 → 生成 Markdown → 提交 PR」的全过程。
+# 字段与 scripts/build_curated.py 的解析逻辑一一对应，改动需两边同步。
+#
+# 上线前必改：把 backend.repo 换成真实的 GitHub 仓库（owner/name）。
+# 本地试用：仓库根目录执行 `npx decap-server`，再打开 /admin/ 即可，
+#           此时走 local_backend，直接读写本地 docs/curated/，不碰 GitHub。
+# ============================================================
+
+backend:
+  name: github
+  repo: your-org/shihu-poetry   # TODO: 换成真实仓库
+  branch: master
+  commit_messages:
+    create: "投稿：新增{{collection}}「{{slug}}」"
+    update: "修订：更新{{collection}}「{{slug}}」"
+    delete: "撤稿：删除{{collection}}「{{slug}}」"
+    openAuthoring: "投稿（外部作者）：{{collection}}「{{slug}}」"
+
+# 本地开发后端：npx decap-server 启动后自动启用，无需 GitHub 账号
+local_backend: true
+
+# 编辑工作流：草稿 → 待审 → 发布，对应 GitHub 的 Pull Request
+# 社员提交的是草稿 PR，社务审核合并后才进入 master
+#
+# 注意：本地模式（decap-server）不支持 editorial_workflow——本地代理握手时
+# 只报告 publish_modes: ["simple"]，Decap 会自动降级并在浏览器控制台留一行
+# 提示，此时后台没有「工作流」看板、保存即落盘。接 GitHub 后端后自动恢复，
+# 本行无需改动。
+publish_mode: editorial_workflow
+
+# 文件名统一用作者自填的 ASCII 短名（见各集合的 id 字段），避免中文文件名
+slug:
+  encoding: ascii
+  clean_accents: true
+
+media_folder: website/assets/uploads
+public_folder: /assets/uploads
+
+locale: zh_Hans
+
+collections:
+  # ---------- 社员档案 ----------
+  - name: members
+    label: 社员档案
+    label_singular: 社员
+    folder: docs/curated/members
+    create: true
+    slug: "{{fields.id}}"
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: name
+    summary: "{{name}}（{{sub}}）"
+    editor:
+      preview: false
+    fields:
+      - label: 档案短名（英文小写，作文件名，一经建立不要修改）
+        name: id
+        widget: string
+        pattern: ["^[a-z][a-z0-9-]*$", "只能用小写字母、数字与连字符，如 shihuke"]
+      - label: 姓名 / 笔名
+        name: name
+        widget: string
+      - label: 印章字（单字，显示于名录印章）
+        name: sealChar
+        widget: string
+        pattern: ["^.$", "请填写单个汉字"]
+      - label: 英文名
+        name: nameEn
+        widget: string
+        required: false
+        default: ""
+      - label: 时代
+        name: dynasty
+        widget: string
+        default: "今"
+      - label: 社内身份
+        name: sub
+        widget: string
+        default: "石湖诗社社员"
+      - label: 一句话小传（显示于名录卡片）
+        name: summary
+        widget: text
+      - label: 详细小传（每段一条）
+        name: life
+        widget: list
+        required: false
+        field: { label: 段落, name: paragraph, widget: text }
+      - label: 资料出处
+        name: sources
+        widget: list
+        required: false
+        default: ["石湖诗社社员自述"]
+        field: { label: 出处, name: source, widget: string }
+      - label: 小传状态
+        name: biographyStatus
+        widget: hidden
+        default: member
+
+  # ---------- 社员作品 ----------
+  - name: poems
+    label: 社员作品
+    label_singular: 作品
+    folder: docs/curated/poems
+    create: true
+    slug: "{{fields.id}}"
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    summary: "{{title}} · {{author}}（{{genre}}）"
+    editor:
+      preview: false
+    fields:
+      - label: 篇目短名（英文小写，作文件名，一经上站不要修改）
+        name: id
+        widget: string
+        pattern: ["^[a-z][a-z0-9-]*$", "只能用小写字母、数字与连字符，如 shi-hu-chun-xiao"]
+      - label: 篇名
+        name: title
+        widget: string
+      - label: 作者（须为已在册社员）
+        name: author
+        widget: relation
+        collection: members
+        search_fields: [name]
+        value_field: name
+        display_fields: [name]
+      - label: 体裁
+        name: genre
+        widget: select
+        options: [五绝, 七绝, 五律, 七律, 排律, 古风, 词, 曲, 现代诗, 其他]
+        default: 七绝
+      - label: 写作年份
+        name: year
+        widget: string
+        required: false
+        default: ""
+      - label: 出处（社课 / 唱和 / 自选等）
+        name: source
+        widget: string
+        default: 石湖诗社
+      - label: 题解（写作缘起、背景）
+        name: context
+        widget: text
+        required: false
+        default: ""
+      - label: 注释
+        name: notes
+        widget: list
+        required: false
+        label_singular: 注条
+        summary: "{{fields.term}}"
+        fields:
+          - { label: 词条, name: term, widget: string }
+          - { label: 释义, name: gloss, widget: text }
+      - label: 赏析
+        name: appreciation
+        widget: object
+        required: false
+        collapsed: false
+        fields:
+          - label: 正文（每段一条）
+            name: body
+            widget: list
+            required: false
+            field: { label: 段落, name: paragraph, widget: text }
+          - label: 赏析署名
+            name: source
+            widget: string
+            required: false
+            default: ""
+      - label: 名句
+        name: famous
+        widget: list
+        required: false
+        label_singular: 名句
+        summary: "{{fields.line}}"
+        fields:
+          - { label: 句子, name: line, widget: string }
+          - { label: 点评, name: comment, widget: text }
+      - label: 出处溯源
+        name: sources
+        widget: list
+        required: false
+        field: { label: 出处, name: source, widget: string }
+      - label: 诗句正文（一行一句；空一行表示分段/分阕）
+        name: body
+        widget: text

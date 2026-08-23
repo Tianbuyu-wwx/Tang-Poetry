@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>石湖诗社 · 鉴赏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=13" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=13">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-center">
+    <div class="crumb" id="crumb">
+      <a href="./index.html">首页</a>
+      <span class="sep">›</span>
+      <a href="./poets.html">诗人索引</a>
+      <span class="sep">›</span>
+      <span id="crumbAuthor">诗人卷</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <a class="nav-link" href="./members.html">社员</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="page">
+  <article class="poem" id="poemMain">
+    <!-- 由 JS 注入 -->
+  </article>
+
+  <aside class="poet-aside" id="poetAside">
+    <!-- 由 JS 注入 -->
+  </aside>
+</main>
+
+<div class="poet-modal-backdrop" id="poetModal" aria-hidden="true">
+  <div class="poet-modal" role="dialog" aria-modal="true" aria-labelledby="modalName" tabindex="-1">
+    <button class="close" id="poetClose" aria-label="关闭">×</button>
+    <h3 id="modalName"></h3>
+    <div class="sub" id="modalSub"></div>
+    <div class="life" id="modalLife"></div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="seal-line">
+    <span class="mini-seal" data-brand="seal-left">石</span>
+    <span data-brand="footer-name">石湖诗社</span>
+    <span class="mini-seal" data-brand="seal-right">社</span>
+  </div>
+  <div>正文底库：chinese-poetry 开放《全唐诗》语料｜ 赏析与异文来源见各诗出处溯源</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/poets-index.js?v=13" defer></script>
+<script src="./assets/js/page-poem.js?v=13" defer></script>
+<script src="./assets/js/register-sw.js?v=13" defer></script>
+<script src="./assets/js/web-vitals.js?v=13" defer></script>
+<script src="./assets/js/lazy-load.js?v=13" defer></script>
+<script src="./assets/js/back-to-top.js?v=13" defer></script>
+</body>
+</html>

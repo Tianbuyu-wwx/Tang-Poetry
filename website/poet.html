@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>诗人 · 石湖诗社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=13" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=13">
+<style>
+  .poet-page { max-width: 1100px; margin: 0 auto; padding: 3.5rem 3rem 5rem; position: relative; z-index: 1; }
+  .poet-hero { display: flex; align-items: center; gap: 1.6rem; padding-bottom: 2rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
+  .poet-hero .big-seal {
+    width: 84px; height: 84px; background: var(--cinnabar); color: var(--paper);
+    font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 48px; display: grid; place-items: center;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.2), 0 4px 16px rgba(122,40,40,.3); border-radius: 6px; transform: rotate(-2deg);
+  }
+  .poet-hero h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 52px; color: var(--ink-deep); letter-spacing: 6px; line-height: 1; }
+  .poet-hero .pen { font-family: "Noto Serif SC",serif; font-size: 13px; letter-spacing: 2px; color: var(--ink-light); margin-top: .5rem; }
+  .poet-bio { font-family: "Noto Serif SC",serif; font-size: 16px; line-height: 2; color: var(--ink); text-align: justify; margin-bottom: 3rem; }
+  .poet-bio p { margin-bottom: 1rem; text-indent: 2em; }
+  .poet-sources { margin: -1.6rem 0 2.6rem; padding: 1rem 1.2rem; border-left: 2px solid var(--cinnabar); background: rgba(255,255,255,.35); font: 12px/1.8 "Noto Serif SC",serif; color: var(--ink-light); }
+  .poet-sources a { color: var(--cinnabar); text-decoration: none; }
+  .poet-section-title { display: flex; align-items: center; gap: .9rem; font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 22px; color: var(--ink-deep); letter-spacing: 4px; margin: 2.5rem 0 1.4rem; font-weight: 700; }
+  .poet-section-title .en { font-size: 11px; letter-spacing: 3px; color: var(--ink-faint); }
+  .poet-section-title::before { content: ""; width: 22px; height: 22px; background: var(--cinnabar); border-radius: 2px; box-shadow: inset 0 0 0 1.5px var(--paper); }
+  .poet-works { list-style: none; columns: 2; column-gap: 2.5rem; }
+  @media (max-width: 760px){ .poet-works { columns: 1; } }
+  .poet-works li { break-inside: avoid; border-bottom: 1px dotted var(--rule); }
+  .poet-works a { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .65rem 0; text-decoration: none; color: var(--ink); font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 18px; letter-spacing: 2px; transition: color .2s; }
+  .poet-works a:hover { color: var(--cinnabar); }
+  .poet-works .g { font-family: "Noto Serif SC",serif; font-size: 11px; color: var(--ink-faint); letter-spacing: 1px; flex-shrink: 0; }
+  .poet-empty { font-family: "Noto Serif SC",serif; color: var(--ink-light); }
+  .works-status { margin: -.6rem 0 1.2rem; font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; }
+  .works-actions { text-align: center; margin-top: 2rem; }
+  .list-more { padding: .75rem 1.6rem; border: 1px solid var(--cinnabar); background: transparent; color: var(--cinnabar); cursor: pointer; font: 14px "Noto Serif SC",serif; letter-spacing: 2px; }
+  .list-more:hover,.list-more:focus-visible { color: var(--paper); background: var(--cinnabar); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-center">
+    <div class="crumb">
+      <a href="./index.html">首页</a>
+      <span class="sep">›</span>
+      <a href="./poets.html">诗人索引</a>
+      <span class="sep">›</span>
+      <span id="crumbName">诗人</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <a class="nav-link" href="./members.html">社员</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="poet-page" id="poetPage">
+  <!-- JS 注入 -->
+</main>
+
+<footer class="site">
+  <div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div>
+  <div>诗作与生平底库：chinese-poetry 开放资料及 CBDB 数据</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/poets-data.js?v=13" defer></script>
+<script src="./assets/js/poets-index.js?v=13" defer></script>
+<script src="./assets/js/page-poet.js?v=13" defer></script>
+<script>
+(function () {
+  "use strict";
+  if (window.OPTIMIZED_POET_PAGE) return;
+  var PD = window.POETS_DATA || {};
+  var D = window.POEMS_DATA || {};
+  function getParam(n){ var m=new RegExp("[?&]"+n+"=([^&]*)").exec(location.search); return m?decodeURIComponent(m[1]):""; }
+  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  var slug = getParam("id");
+  var poet = PD[slug];
+  var page = document.getElementById("poetPage");
+
+  if (!poet) {
+    page.innerHTML = '<h1 class="poet-section-title">未找到诗人</h1><p class="poet-empty">未找到 slug=<code>'+esc(slug)+'</code> 的诗人。<a href="./poets.html">返回索引</a></p>';
+    return;
+  }
+
+  var name = poet.name || "佚名";
+  var seal = poet.sealChar || (name ? name[0] : "唐");
+  var pEn = poet.nameEn || (poet.sub || "");
+  var dyn = poet.dynasty || "唐";
+  var life = poet.life || [];
+  var bioSources = poet.sources || [];
+  var bioHtml = "";
+  if (life.length) {
+    for (var i=0;i<life.length;i++) bioHtml += "<p>"+esc(life[i])+"</p>";
+  } else if (poet.summary) {
+    bioHtml = "<p>"+esc(poet.summary)+"</p>";
+  } else {
+    bioHtml = '<p class="poet-empty">暂无详细生平资料。</p>';
+  }
+  var bioSourceHtml = "";
+  if (bioSources.length) {
+    var sourceLinks = [];
+    for (var si=0; si<bioSources.length; si++) {
+      var source = bioSources[si] || {};
+      if (typeof source === "string") {
+        sourceLinks.push(esc(source));
+      } else {
+        var label = source.label || source.name || source.url || "资料来源";
+        sourceLinks.push(source.url ? '<a href="'+esc(source.url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>' : esc(label));
+      }
+    }
+    bioSourceHtml = '<div class="poet-sources">生平资料来源：'+sourceLinks.join(' · ')+'</div>';
+  }
+
+  // 该诗人全部诗（按 id 顺序）
+  var works = [];
+  for (var pid in D) {
+    if (D[pid][1] && D[pid][1].replace(/\s+/g,"") === name.replace(/\s+/g,"")) {
+      works.push({ id: pid, t: D[pid][0], g: D[pid][2] || "" });
+    }
+  }
+  works.sort(function(a,b){ return a.id < b.id ? -1 : 1; });
+
+  var lis = "";
+  if (works.length) {
+    for (var w=0; w<works.length; w++) {
+      lis += '<li><a href="./poem.html?id='+encodeURIComponent(works[w].id)+'">' +
+        '<span>'+esc(works[w].t)+'</span>' +
+        (works[w].g ? '<span class="g">'+esc(works[w].g)+'</span>' : '') + '</a></li>';
+    }
+  } else {
+    lis = '<li><span class="poet-empty">《全唐诗》未收录其诗作条目。</span></li>';
+  }
+
+  page.innerHTML =
+    '<div class="poet-hero">' +
+      '<div class="big-seal">'+esc(seal)+'</div>' +
+      '<div><h1>'+esc(name)+'</h1>' +
+      '<div class="pen">'+(pEn?esc(pEn)+' · ':'')+esc(dyn)+'代 · 存诗 '+works.length+' 首</div></div>' +
+    '</div>' +
+    '<div class="poet-bio">'+bioHtml+'</div>' + bioSourceHtml +
+    '<div class="poet-section-title">诗作全集 <span class="en" style="font-size:11px;letter-spacing:3px;color:var(--ink-faint);">Works</span></div>' +
+    '<ul class="poet-works">'+lis+'</ul>';
+
+  document.title = name + " · " + (window.BRAND ? window.BRAND.name : "石湖诗社");
+  document.getElementById("crumbName").textContent = name;
+})();
+</script>
+<script src="./assets/js/register-sw.js?v=13" defer></script>
+<script src="./assets/js/web-vitals.js?v=13" defer></script>
+<script src="./assets/js/lazy-load.js?v=13" defer></script>
+<script src="./assets/js/back-to-top.js?v=13" defer></script>
+</body>
+</html>

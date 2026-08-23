@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>关于 · 石湖诗社</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/css/poem.css?v=13" as="style">
+<link rel="stylesheet" href="assets/css/poem.css?v=13">
+<style>
+  .about-page { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 5rem; position: relative; z-index: 2; }
+  .about-header { text-align: center; margin-bottom: 4rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--rule); position: relative; }
+  .about-header::after { content: ""; position: absolute; left: 50%; bottom: -1px; transform: translateX(-50%); width: 80px; height: 2px; background: var(--cinnabar); }
+  .about-header h1 { font-family: "Ma Shan Zheng", serif; font-size: 64px; letter-spacing: 12px; color: var(--ink-deep); margin-bottom: 0.5rem; font-weight: 400; }
+  .about-header .sub { font-family: "ZCOOL XiaoWei", serif; font-size: 16px; letter-spacing: 6px; color: var(--ink-light); }
+  .about-section { margin-bottom: 3rem; }
+  .about-section h2 { font-family: "Ma Shan Zheng", serif; font-size: 32px; color: var(--ink-deep); letter-spacing: 6px; margin-bottom: 1.5rem; padding-left: 1rem; border-left: 4px solid var(--cinnabar); }
+  .about-section p { font-size: 15px; line-height: 2; color: var(--ink); margin-bottom: 1rem; text-indent: 2em; }
+  .about-section ul { padding-left: 2em; }
+  .about-section li { font-size: 15px; line-height: 2; color: var(--ink); margin-bottom: 0.5rem; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+  .stat { text-align: center; padding: 1.5rem; background: var(--paper-deep); border-top: 2px solid var(--cinnabar); }
+  .stat .num { font-family: "Ma Shan Zheng", serif; font-size: 40px; color: var(--cinnabar); letter-spacing: 2px; }
+  .stat .label { font-family: "ZCOOL XiaoWei", serif; font-size: 14px; color: var(--ink-light); letter-spacing: 3px; margin-top: 0.5rem; }
+  /* 紧凑 topbar */
+  .topbar { position: sticky; top: 0; background: rgba(250,246,237,0.95); border-bottom: 1px solid var(--rule); padding: 0.7rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(8px); gap: 1.2rem; }
+  .topbar .logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink-deep); }
+  .topbar .logo-seal { width: 40px; height: 40px; background: var(--cinnabar); border-radius: 3px; display: grid; place-items: center; position: relative; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), inset 0 0 0 3px var(--cinnabar), 0 2px 6px rgba(122,40,40,0.25); transform: rotate(-1.5deg); }
+  .topbar .logo-seal::before { content: ""; position: absolute; inset: 3px; border: 1px solid rgba(255,255,255,0.4); border-radius: 2px; }
+  .topbar .logo-seal span { font-family: "Ma Shan Zheng", "STKaiti", serif; font-size: 24px; color: var(--paper); font-weight: 700; line-height: 1; letter-spacing: -1px; text-shadow: 0 1px 0 rgba(122,40,40,0.4); position: relative; z-index: 1; }
+  .topbar .logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .topbar .logo-text .t1 { font-family: "ZCOOL XiaoWei", "STKaiti", serif; font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--ink-deep); }
+  .topbar .logo-text .t2 { font-family: "Noto Serif SC", serif; font-size: 9px; letter-spacing: 2px; color: var(--ink-light); text-transform: uppercase; margin-top: 1px; }
+  .topbar nav { display: flex; gap: 1.5rem; }
+  .topbar nav a { color: var(--ink-light); text-decoration: none; font-family: "ZCOOL XiaoWei", serif; font-size: 14px; letter-spacing: 2px; transition: color 0.2s; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .topbar nav a:hover { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
+  .topbar nav a.current { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
+  .footer { text-align: center; padding: 2rem; color: var(--ink-light); font-size: 13px; border-top: 1px solid var(--rule); margin-top: 4rem; font-family: "ZCOOL XiaoWei", serif; letter-spacing: 2px; position: relative; z-index: 2; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="index.html">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <nav>
+    <a href="index.html">首页</a>
+    <a href="navigation.html">导航</a>
+    <a href="poets.html">诗人</a>
+    <a href="members.html">社员</a>
+    <a href="sources.html">典籍</a>
+    <a href="about.html" class="current">关于</a>
+    <a href="society.html">社务</a>
+  </nav>
+</header>
+<main class="about-page">
+  <header class="about-header">
+    <h1>关于本站</h1>
+    <div class="sub">湖山养气 · 诗书雅集</div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="aboutPoems">—</div><div class="label">首诗作</div></div>
+    <div class="stat"><div class="num" id="aboutPoets">—</div><div class="label">位诗人</div></div>
+    <div class="stat"><div class="num" id="aboutAnnotated">—</div><div class="label">首有注解</div></div>
+    <div class="stat"><div class="num" id="aboutBooks">—</div><div class="label">部公版典籍</div></div>
+  </div>
+
+  <section class="about-section">
+    <h2>底本与体例</h2>
+    <p>本站正文底库来自 chinese-poetry 开放《全唐诗》语料，共 <span class="about-num" data-key="open_poems">—</span> 条；另保留 <span class="about-num" data-key="supplements">—</span> 首无法与开放语料唯一对齐的整理本组诗或异文条目，合计 <span class="about-num" data-key="poems">—</span> 首。作者名经繁简与异体归并后为 <span class="about-num" data-key="poets">—</span> 位。</p>
+    <p>既有题解、注释和赏析通过作者、诗题与首句迁移；公版《御选唐诗》《唐诗鼓吹》《唐诗镜》《唐诗品汇》《瀛奎律髓》《唐贤三昧集》中的古注、校语与评点，则用注释断点两侧的唯一诗句挂接。当前 <span class="about-num" data-key="annotated">—</span> 首带有注解内容，其中古籍新增覆盖 <span class="about-num" data-key="commentary_new_poems">—</span> 首。诗作页把逐句古注与宏观古评分为“古籍注释”“古籍赏评”，并保留现有现代赏析；古籍摘录保留原文与书名，不等同于现代白话注释。</p>
+  </section>
+
+  <section class="about-section">
+    <h2>视觉风格</h2>
+    <p>本站采用「水墨写意」视觉风格，以宣纸肌理为底，朱砂方印为识，墨色浓淡为层次。设计理念：</p>
+    <ul>
+      <li>色彩：以 oklch 色彩空间定义，纸色 <code>#faf6ed</code>、墨色 <code>#1a1a1a</code>、朱砂 <code>#a83232</code> 三色为基调</li>
+      <li>字体：标题用 Ma Shan Zheng（马善政毛笔楷书），副标题用 ZCOOL XiaoWei（站酷小薇），正文用 Noto Serif SC（思源宋体）</li>
+      <li>LOGO：朱砂方印「唐」字，灵感源自传统篆刻印章</li>
+      <li>排版：竖排标题、横排正文，参酌古籍版式而加以现代化处理</li>
+    </ul>
+  </section>
+
+  <section class="about-section">
+    <h2>技术架构</h2>
+    <p>本站为纯静态网站，无后端依赖，可直接由任意静态文件服务器托管。</p>
+    <ul>
+      <li>原始资料：Python 脚本负责解析、清洗和合并原文与注解</li>
+      <li>前端数据：诗作、索引、诗人与名句分别输出为静态 JavaScript 数据</li>
+      <li>页面路由：诗作和诗人详情通过查询参数在浏览器中动态渲染</li>
+      <li>检索方式：按诗题、作者或首句即时过滤，并可只看有注解的诗作</li>
+      <li>响应式设计：适配桌面、平板、手机</li>
+    </ul>
+  </section>
+
+  <section class="about-section">
+    <h2>使用指南</h2>
+    <ul>
+      <li><strong>检索页</strong>：输入诗人、诗题或首句，支持“有注解赏析”筛选</li>
+      <li><strong>诗人索引</strong>：浏览全部 <span class="about-num" data-key="poets">—</span> 位作者及其存诗数量</li>
+      <li><strong>诗作页</strong>：展示原文；有资料时继续展示题解、现代注释、古籍注释、现代赏析、古籍赏评、名句与出处</li>
+      <li><strong>诗人页</strong>：展示诗人生平资料及其全部收录作品</li>
+      <li><strong>典籍页</strong>：全文检索并逐章阅读 <span class="about-num" data-key="books">—</span> 部公版唐诗选本、诗话、传记与古代注评</li>
+    </ul>
+  </section>
+
+  <section class="about-section">
+    <h2>致谢</h2>
+    <p>正文语料来自 chinese-poetry 项目，依 MIT 许可证使用；诗人生平资料同时参考开放传记与 CBDB 数据，其组合数据依 CC BY-NC-SA 4.0 使用；十三部古籍的维基文库录入依 CC BY-SA 4.0 使用。</p>
+    <p>感谢历代唐诗研究者与开放资料维护者。本站仅供学习与赏析；引用、改编或再发布时，请继续核对各条目的原始出处与相应许可。</p>
+  </section>
+
+</main>
+<footer class="footer">
+  <div>正文底库：chinese-poetry 开放《全唐诗》语料｜ 赏析与异文资料见各诗出处溯源</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+<script src="assets/js/site-meta.js?v=13" defer></script>
+<script>
+// 等待 defer 数据脚本执行后再填充
+(function(){
+  function init(){
+    var meta = window.SITE_META || {};
+    var ids = {aboutPoems: meta.poems, aboutPoets: meta.poets, aboutAnnotated: meta.annotated, aboutBooks: meta.books};
+    for (var k in ids) {
+      var el = document.getElementById(k);
+      if (el && ids[k] != null) el.textContent = ids[k].toLocaleString();
+    }
+    var spans = document.querySelectorAll('.about-num[data-key]');
+    for (var i = 0; i < spans.length; i++) {
+      var el = spans[i];
+      var key = el.getAttribute('data-key');
+      if (meta[key] != null) el.textContent = meta[key].toLocaleString();
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+<script src="assets/js/register-sw.js?v=13" defer></script>
+<script src="assets/js/web-vitals.js?v=13" defer></script>
+<script src="assets/js/lazy-load.js?v=13" defer></script>
+<script src="assets/js/back-to-top.js?v=13" defer></script>
+</body>
+</html>

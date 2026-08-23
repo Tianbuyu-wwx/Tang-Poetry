@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=14"></script>
+<title>公告 · 石湖诗社</title>
+<meta name="description" content="石湖诗社公告与活动：社课征稿、社刊首发、年会启事等社中资讯。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=14" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=14">
+<style>
+  .news-page { max-width: 860px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
+  .news-head { text-align: center; margin-bottom: 2.2rem; }
+  .news-head h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 56px; color: var(--ink-deep); letter-spacing: 8px; }
+  .news-head .sub { font-family: "ZCOOL XiaoWei",serif; font-size: 14px; letter-spacing: 4px; color: var(--ink-light); margin-top: .6rem; }
+
+  .news-list { display: grid; gap: 1.8rem; }
+  .news-card {
+    padding: 1.8rem 2rem; border: 1px solid var(--rule); background: rgba(255,255,255,.42);
+    border-left: 3px solid var(--cinnabar); transition: border-color .2s, box-shadow .2s;
+  }
+  .news-card:hover { box-shadow: 0 6px 20px rgba(122,40,40,.10); }
+  .news-top { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; margin-bottom: .7rem; }
+  .news-date { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; }
+  .news-tag { font: 11px "Noto Serif SC",serif; letter-spacing: 1px; padding: .12rem .6rem; border-radius: 2px; border: 1px solid var(--gold); color: var(--gold); }
+  .news-title { font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 26px; letter-spacing: 3px; color: var(--ink-deep); margin-bottom: .4rem; }
+  .news-author { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; margin-bottom: 1rem; }
+  .news-body { font: 14px/2 "Noto Serif SC",serif; color: var(--ink); letter-spacing: .5px; }
+  .news-body p { margin: 0 0 .9rem; }
+  .news-body p:last-child { margin-bottom: 0; }
+  .news-body h2 { font-family: "ZCOOL XiaoWei",serif; font-size: 18px; color: var(--ink-deep); letter-spacing: 2px; margin: 1.2rem 0 .6rem; }
+  .news-body h3 { font-family: "ZCOOL XiaoWei",serif; font-size: 16px; color: var(--ink-deep); letter-spacing: 2px; margin: 1rem 0 .5rem; }
+  .news-body ul, .news-body ol { padding-left: 1.6em; margin: 0 0 .9rem; }
+  .news-body li { margin-bottom: .4rem; }
+  .news-body a { color: var(--cinnabar); text-decoration: none; border-bottom: 1px solid rgba(168,50,50,.35); }
+  .news-body a:hover { border-bottom-color: var(--cinnabar); }
+  .news-body code { font-family: ui-monospace, "Cascadia Code", monospace; background: rgba(26,26,26,.06); padding: .05rem .35rem; border-radius: 3px; font-size: 13px; }
+  .news-body hr { border: none; border-top: 1px solid var(--rule); margin: 1.2rem 0; }
+  .news-body strong { color: var(--cinnabar-deep); }
+  .news-empty { text-align: center; font-family: "Noto Serif SC",serif; color: var(--ink-light); padding: 3rem 0; }
+
+  @media (max-width: 600px){
+    .news-page { padding: 2rem 1.2rem 3rem; }
+    .news-head h1 { font-size: 40px; letter-spacing: 5px; }
+    .news-card { padding: 1.4rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="nav-link" href="./poets.html">诗人</a>
+    <a class="nav-link" href="./members.html">社员</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="news-page">
+  <div class="news-head">
+    <h1>公告</h1>
+    <div class="sub">SHIHU SOCIETY NOTICES · 社中资讯</div>
+  </div>
+
+  <div class="news-list" id="newsBody"></div>
+  <div class="news-empty" id="emptyHint" style="display:none">暂无公告。</div>
+</main>
+
+<footer class="site">
+  <div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div>
+  <div>社员作品版权归作者本人所有，经作者授权在本站展示</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/news-index.js?v=14" defer></script>
+<script src="./assets/js/page-news.js?v=14" defer></script>
+<script src="./assets/js/register-sw.js?v=14" defer></script>
+<script src="./assets/js/web-vitals.js?v=14" defer></script>
+<script src="./assets/js/back-to-top.js?v=14" defer></script>
+</body>
+</html>

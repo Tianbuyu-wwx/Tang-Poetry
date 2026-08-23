@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=13"></script>
+<title>社员名录 · 石湖诗社</title>
+<meta name="description" content="石湖诗社社员名录：社员小传、诗词作品与投稿入口。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=13" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=13">
+<style>
+  .mem-page { max-width: 1080px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
+  .mem-head { text-align: center; margin-bottom: 2rem; }
+  .mem-head h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 56px; color: var(--ink-deep); letter-spacing: 8px; }
+  .mem-head .sub { font-family: "ZCOOL XiaoWei",serif; font-size: 14px; letter-spacing: 4px; color: var(--ink-light); margin-top: .6rem; }
+
+  .mem-intro {
+    max-width: 720px; margin: 0 auto 2.2rem; padding: 1.4rem 1.6rem;
+    border: 1px solid var(--rule); border-left: 3px solid var(--cinnabar);
+    background: rgba(255,255,255,.45);
+    font: 14px/2 "Noto Serif SC",serif; color: var(--ink); letter-spacing: 1px;
+  }
+  .mem-intro p { margin: 0 0 .9rem; }
+  .mem-intro p:last-of-type { margin-bottom: 0; }
+  .mem-cta { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+  .mem-cta a {
+    display: inline-block; padding: .55rem 1.3rem; text-decoration: none;
+    border: 1px solid var(--cinnabar); color: var(--cinnabar);
+    font: 13px "Noto Serif SC",serif; letter-spacing: 2px; transition: all .2s;
+  }
+  .mem-cta a:hover, .mem-cta a:focus-visible { background: var(--cinnabar); color: var(--paper); outline: none; }
+  .mem-cta .hint { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; }
+
+  .mem-search { max-width: 560px; margin: 0 auto 1.2rem; }
+  .mem-search input {
+    width: 100%; padding: 1rem 1.4rem; font-family: "Noto Serif SC",serif; font-size: 16px;
+    border: 1px solid var(--rule-strong); background: rgba(255,255,255,.6); color: var(--ink);
+    letter-spacing: 2px; outline: none; transition: border-color .2s;
+  }
+  .mem-search input:focus { border-color: var(--cinnabar); }
+  .mem-summary { text-align: center; font: 13px "Noto Serif SC",serif; color: var(--ink-light); margin-bottom: 2.2rem; letter-spacing: 1px; }
+  .mem-summary .num { color: var(--cinnabar); font-weight: 700; font-size: 15px; }
+
+  .mem-list { display: grid; gap: 1.4rem; }
+  .mem-card {
+    display: grid; grid-template-columns: 72px 1fr; gap: 1.4rem;
+    padding: 1.6rem 1.8rem; border: 1px solid var(--rule); background: rgba(255,255,255,.42);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .mem-card:hover { border-color: var(--cinnabar); box-shadow: 0 6px 20px rgba(122,40,40,.10); }
+  .mem-card .seal {
+    width: 72px; height: 72px; background: var(--cinnabar); color: var(--paper);
+    font-family: "Ma Shan Zheng",serif; font-size: 40px; display: grid; place-items: center;
+    border-radius: 4px; flex-shrink: 0;
+  }
+  .mem-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: .8rem; margin-bottom: .5rem; }
+  .mem-name a { font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 27px; letter-spacing: 4px; color: var(--ink-deep); text-decoration: none; }
+  .mem-name a:hover, .mem-name a:focus-visible { color: var(--cinnabar); outline: none; }
+  .mem-name .en { font: 11px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; }
+  .mem-name mark { color: var(--cinnabar); background: rgba(168,50,50,.12); padding: 0 2px; }
+  .mem-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .8rem; }
+  .mem-tags span {
+    font: 11px "Noto Serif SC",serif; letter-spacing: 1px; color: var(--ink-light);
+    border: 1px solid var(--rule); padding: .15rem .55rem; border-radius: 2px;
+  }
+  .mem-summary-text { font: 13px/2 "Noto Serif SC",serif; color: var(--ink); letter-spacing: .5px; margin-bottom: 1rem; }
+  .mem-works-label { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 2px; margin-bottom: .5rem; }
+  .mem-works { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
+  .mem-works a {
+    display: inline-flex; align-items: baseline; gap: .4rem; text-decoration: none;
+    padding: .35rem .8rem; border: 1px solid var(--rule); background: rgba(255,255,255,.5);
+    color: var(--ink); transition: all .18s;
+  }
+  .mem-works a:hover, .mem-works a:focus-visible { border-color: var(--cinnabar); color: var(--cinnabar); outline: none; }
+  .mem-works .t { font: 14px "ZCOOL XiaoWei","STKaiti",serif; letter-spacing: 2px; }
+  .mem-works .g { font: 11px "Noto Serif SC",serif; color: var(--ink-light); }
+  .mem-works a:hover .g { color: var(--cinnabar); }
+  .mem-works .none { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; }
+  .mem-empty { text-align: center; font-family: "Noto Serif SC",serif; color: var(--ink-light); padding: 3rem 0; }
+
+  @media (max-width: 600px){
+    .mem-page { padding: 2rem 1.2rem 3rem; }
+    .mem-head h1 { font-size: 40px; letter-spacing: 5px; }
+    .mem-card { grid-template-columns: 1fr; gap: 1rem; padding: 1.3rem 1.2rem; }
+    .mem-card .seal { width: 56px; height: 56px; font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-center">
+    <div class="crumb"><a href="./index.html">首页</a><span class="sep">›</span><span>社员名录</span></div>
+  </div>
+  <div class="topbar-right">
+    <a class="nav-link" href="./poets.html">诗人</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="mem-page">
+  <div class="mem-head">
+    <h1>社员名录</h1>
+    <div class="sub">SHIHU SOCIETY MEMBERS · 结社石湖</div>
+  </div>
+
+  <section class="mem-intro">
+    <p>石湖诗社以诗会友，主张「旧体新声」——于传统格律中写当代人情风物，兼收现代诗之作。凡社员作品，皆与《全唐诗》经典库同库检索、同式呈现。</p>
+    <p>下列为在册社员及其已上站作品。点击姓名可查看小传与作品全览，点击篇名直达赏析页。</p>
+    <div class="mem-cta">
+      <a href="./admin/" target="_blank" rel="noopener">社员投稿</a>
+      <span class="hint">需 GitHub 账号并经社务审核后上站</span>
+    </div>
+  </section>
+
+  <div class="mem-search">
+    <label class="sr-only" for="searchInput">搜索社员姓名或作品</label>
+    <input id="searchInput" type="text" placeholder="搜索社员姓名或篇名…" autocomplete="off">
+  </div>
+  <div class="mem-summary" id="summary" aria-live="polite"></div>
+
+  <div class="mem-list" id="membersBody"></div>
+  <div class="mem-empty" id="emptyHint" style="display:none">未找到匹配的社员。</div>
+</main>
+
+<footer class="site">
+  <div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div>
+  <div>社员作品版权归作者本人所有，经作者授权在本站展示</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/members-index.js?v=13" defer></script>
+<script src="./assets/js/page-members.js?v=13" defer></script>
+<script src="./assets/js/register-sw.js?v=13" defer></script>
+<script src="./assets/js/web-vitals.js?v=13" defer></script>
+<script src="./assets/js/back-to-top.js?v=13" defer></script>
+</body>
+</html>

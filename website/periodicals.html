@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/js/brand.js?v=14"></script>
+<title>社刊 · 石湖诗社</title>
+<meta name="description" content="石湖诗社社刊《石湖吟草》：按辑汇刊社课佳作与同好唱和。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/css/poem.css?v=14" as="style">
+<link rel="stylesheet" href="./assets/css/poem.css?v=14">
+<style>
+  .per-page { max-width: 1000px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
+  .per-head { text-align: center; margin-bottom: 1.8rem; }
+  .per-head h1 { font-family: "Ma Shan Zheng","STKaiti",serif; font-size: 56px; color: var(--ink-deep); letter-spacing: 8px; }
+  .per-head .sub { font-family: "ZCOOL XiaoWei",serif; font-size: 14px; letter-spacing: 4px; color: var(--ink-light); margin-top: .6rem; }
+  .per-intro {
+    max-width: 760px; margin: 0 auto 2.6rem; padding: 1.4rem 1.6rem;
+    border: 1px solid var(--rule); border-left: 3px solid var(--cinnabar);
+    background: rgba(255,255,255,.45); font: 14px/2 "Noto Serif SC",serif; color: var(--ink); letter-spacing: 1px;
+  }
+  .per-list { display: grid; gap: 2rem; }
+  .per-card {
+    padding: 1.8rem 2rem; border: 1px solid var(--rule); background: rgba(255,255,255,.42);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .per-card:hover { border-color: var(--cinnabar); box-shadow: 0 6px 20px rgba(122,40,40,.10); }
+  .per-title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .8rem; margin-bottom: .6rem; }
+  .per-title { font-family: "ZCOOL XiaoWei","STKaiti",serif; font-size: 28px; letter-spacing: 3px; color: var(--ink-deep); }
+  .per-issue { font: 13px "Noto Serif SC",serif; color: var(--cinnabar); letter-spacing: 2px; padding: .1rem .6rem; border: 1px solid var(--cinnabar); border-radius: 2px; }
+  .per-meta { display: flex; flex-wrap: wrap; gap: 1.2rem; font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: 1px; margin-bottom: .9rem; }
+  .per-meta b { color: var(--ink); font-weight: 500; }
+  .per-desc { font: 13px/1.9 "Noto Serif SC",serif; color: var(--ink); letter-spacing: .5px; margin-bottom: 1rem; }
+  .per-works { display: grid; gap: .6rem; list-style: none; padding: 0; margin: 0; }
+  .per-works li { display: flex; align-items: baseline; flex-wrap: wrap; gap: .6rem; padding: .6rem .9rem; border: 1px solid var(--rule); background: rgba(255,255,255,.5); }
+  .per-works a { text-decoration: none; font: 16px "ZCOOL XiaoWei","STKaiti",serif; letter-spacing: 2px; color: var(--ink-deep); }
+  .per-works a:hover, .per-works a:focus-visible { color: var(--cinnabar); outline: none; }
+  .per-works .g { font: 11px "Noto Serif SC",serif; color: var(--ink-light); }
+  .per-works .note { font: 12px "Noto Serif SC",serif; color: var(--ink-light); letter-spacing: .5px; margin-left: auto; }
+  .per-empty { text-align: center; font-family: "Noto Serif SC",serif; color: var(--ink-light); padding: 3rem 0; }
+
+  @media (max-width: 600px){
+    .per-page { padding: 2rem 1.2rem 3rem; }
+    .per-head h1 { font-size: 40px; letter-spacing: 5px; }
+    .per-card { padding: 1.4rem 1.2rem; }
+    .per-works .note { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="./index.html" aria-label="返回首页">
+    <div class="logo-seal"><span data-brand="hero-seal">石</span></div>
+    <div class="logo-text">
+      <div class="t1" data-brand="nav-name">石湖诗社</div>
+      <div class="t2" data-brand="nav-en">Shihu Poetry Society</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <a class="nav-link" href="./poets.html">诗人</a>
+    <a class="nav-link" href="./members.html">社员</a>
+    <a class="nav-link" href="./sources.html">典籍</a>
+    <a class="nav-link" href="./navigation.html">检索</a>
+    <a class="nav-link" href="./society.html">社务</a>
+  </div>
+</header>
+
+<main class="per-page">
+  <div class="per-head">
+    <h1>社刊</h1>
+    <div class="sub">SHIHU PERIODICALS · 石湖吟草</div>
+  </div>
+
+  <section class="per-intro" id="intro">石湖诗社社刊《石湖吟草》，按辑汇刊社课佳作与同好唱和，以志石湖雅集之盛。</section>
+
+  <div class="per-list" id="periodicalsBody"></div>
+  <div class="per-empty" id="emptyHint" style="display:none">暂无社刊。</div>
+</main>
+
+<footer class="site">
+  <div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div>
+  <div>社员作品版权归作者本人所有，经作者授权在本站展示</div>
+  <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
+</footer>
+
+<script src="./assets/js/poems-index.js?v=14" defer></script>
+<script src="./assets/js/periodicals-index.js?v=14" defer></script>
+<script src="./assets/js/page-periodicals.js?v=14" defer></script>
+<script src="./assets/js/register-sw.js?v=14" defer></script>
+<script src="./assets/js/web-vitals.js?v=14" defer></script>
+<script src="./assets/js/back-to-top.js?v=14" defer></script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+﻿=== 数据文件: 23 个 ===
+  poems_bai_ju_yi.py
+  poems_cen_shen.py
+  poems_du_fu.py
+  poems_du_mu.py
+  poems_gao_shi.py
+  poems_han_yu.py
+  poems_li_bai_more.py
+  poems_li_qi.py
+  poems_li_shang_yin.py
+  poems_liu_chang_qing.py
+  poems_liu_zong_yuan.py
+  poems_lu_lun.py
+  poems_meng_hao_ran.py
+  poems_others_batch1.py
+  poems_others_batch2.py
+  poems_others_batch3.py
+  poems_others_batch4.py
+  poems_wang_chang_ling.py
+  poems_wang_wei.py
+  poems_wei_ying_wu.py
+  poems_yuan_zhen.py
+  poems_zhang_hu.py
+  poems_zhang_jiu_ling.py
+
+=== 总诗作数: 286 ===
+
+=== ID 重复检查 ===
+  无重复 ID
+
+=== 同题同作者重复检查 ===
+  发现 1 组同题同作者:
+    ('隋宫', '李商隐'): [('li-shang-yin-sui-gong-jue', 'poems_li_shang_yin.py'), ('li-shang-yin-sui-gong-lv', 'poems_li_shang_yin.py')]
+
+=== 诗人统计: 72 位 ===
+  丘为: 2 首  [qiu-wei]
+  佚名: 1 首  [yi-ming]
+  元稹: 4 首  [yuan-zhen]
+  元结: 1 首  [yuan-jie]
+  刘方平: 2 首  [liu-fang-ping]
+  刘昚虚: 1 首  [liu-shen-xu]
+  刘禹锡: 4 首  [liu-yu-xi]
+  刘长卿: 11 首  [liu-chang-qing]
+  卢纶: 6 首  [lu-lun]
+  司空曙: 3 首  [si-kong-shu]
+  唐玄宗: 1 首  [tang-xuan-zong]
+  孟浩然: 15 首  [meng-hao-ran]
+  宋之问: 2 首  [song-zhi-wen]
+  岑参: 7 首  [cen-shen]
+  崔曙: 1 首  [cui-shu]
+  崔涂: 2 首  [cui-tu]
+  崔颢: 4 首  [cui-hao]
+  常建: 1 首  [chang-jian]
+  张乔: 1 首  [zhang-qiao]
+  张九龄: 5 首  [zhang-jiu-ling]
+  张旭: 1 首  [zhang-xu]
+  张泌: 1 首  [zhang-mi]
+  张祜: 5 首  [zhang-hu]
+  张籍: 1 首  [zhang-ji2]
+  张继: 1 首  [zhang-ji]
+  戴叔伦: 1 首  [dai-shu-lun]
+  朱庆馀: 2 首  [zhu-qing-yu]
+  权德舆: 1 首  [quan-de-yu]
+  李商隐: 24 首  [li-shang-yin]
+  李白: 12 首  [li-bai]
+  李益: 3 首  [li-yi]
+  李端: 1 首  [li-duan]
+  李颀: 7 首  [li-qi]
+  杜审言: 1 首  [du-shen-yan]
+  杜牧: 10 首  [du-mu]
+  杜甫: 39 首  [du-fu]
+  杜荀鹤: 1 首  [du-xun-he]
+  柳中庸: 1 首  [liu-zhong-yong]
+  柳宗元: 4 首  [liu-zong-yuan]
+  沈佺期: 1 首  [shen-quan-qi]
+  温庭筠: 4 首  [wen-ting-yun]
+  王之涣: 1 首  [wang-zhi-huan]
+  王勃: 1 首  [wang-bo]
+  王建: 1 首  [wang-jian]
+  王昌龄: 7 首  [wang-chang-ling]
+  王湾: 1 首  [wang-wan]
+  王维: 29 首  [wang-wei]
+  王翰: 1 首  [wang-han]
+  白居易: 6 首  [bai-ju-yi]
+  皇甫冉: 1 首  [huang-fu-ran]
+  皎然: 1 首  [jiao-ran]
+  祖咏: 1 首  [zu-yong]
+  秦韬玉: 1 首  [qin-tao-yu]
+  薛逢: 1 首  [xue-feng]
+  裴迪: 1 首  [pei-di]
+  西鄙人: 1 首  [xi-bi-ren]
+  许浑: 2 首  [xu-hun]
+  贺知章: 1 首  [he-zhi-zhang]
+  贾岛: 1 首  [jia-dao]
+  郑畋: 1 首  [zheng-tian]
+  金昌绪: 1 首  [jin-chang-xu]
+  钱起: 3 首  [qian-qi]
+  陈陶: 1 首  [chen-tao]
+  韦庄: 1 首  [wei-zhuang]
+  韦应物: 12 首  [wei-ying-wu]
+  韩偓: 1 首  [han-wo]
+  韩愈: 4 首  [han-yu]
+  韩翃: 3 首  [han-hong]
+  顾况: 1 首  [gu-kuang]
+  马戴: 2 首  [ma-dai]
+  骆宾王: 1 首  [luo-bin-wang]
+  高适: 2 首  [gao-shi]
+
+=== 体裁统计 ===
+  五言律诗: 79
+  七言绝句: 56
+  七言律诗: 53
+  五言绝句: 34
+  五言古诗: 31
+  乐府: 13
+  七言古诗: 10
+  七言古诗 · 乐府: 9
+  五言古诗 · 乐府: 1
+
+=== 所有诗作列表（按诗人+体裁）===
+  1. [丘为] 同从弟销南斋玩月忆山阴崔少府 (五言古诗) id=qiu-wei-tong-cong-di-xiao-nan-zhai-wan-yue-yi-shan-yin
+  2. [丘为] 寻西山隐者不遇 (五言古诗) id=qiu-wei-xun-xi-shan-yin-zhe-bu-yu
+  3. [佚名] 杂诗 (七言绝句) id=yi-ming-za-shi
+  4. [元稹] 遣悲怀三首·其一 (七言律诗) id=yuan-zhen-qian-bei-huai-san-shou-qi-yi
+  5. [元稹] 遣悲怀三首·其三 (七言律诗) id=yuan-zhen-qian-bei-huai-san-shou-qi-san
+  6. [元稹] 遣悲怀三首·其二 (七言律诗) id=yuan-zhen-qian-bei-huai-san-shou-qi-er
+  7. [元稹] 行宫 (五言绝句) id=yuan-zhen-xing-gong
+  8. [元结] 贼退示官吏 (五言古诗) id=yuan-jie-zei-tui-shi-guan-li
+  9. [刘方平] 春怨 (七言绝句) id=liu-fang-ping-chun-yuan
+ 10. [刘方平] 月夜 (七言绝句) id=liu-fang-ping-yue-ye
+ 11. [刘昚虚] 阙题 (五言律诗) id=liu-shen-xu-que-ti
+ 12. [刘禹锡] 西塞山怀古 (七言律诗) id=liu-yu-xi-xi-sai-shan-huai-gu
+ 13. [刘禹锡] 乌衣巷 (七言绝句) id=liu-yu-xi-wu-yi-xiang
+ 14. [刘禹锡] 春词 (七言绝句) id=liu-yu-xi-chun-ci
+ 15. [刘禹锡] 蜀先主庙 (五言律诗) id=liu-yu-xi-shu-xian-zhu-miao
+ 16. [刘长卿] 江州重别薛六柳八二员外 (七言律诗) id=liu-chang-qing-jiang-zhou-chong-bie-xue-liu-liu-ba-er-yuan-wai
+ 17. [刘长卿] 自夏口至鹦鹉洲夕望岳阳 (七言律诗) id=liu-chang-qing-zi-xia-kou-zhi-ying-wu-zhou-xi-wang-yue-yang
+ 18. [刘长卿] 长沙过贾谊宅 (七言律诗) id=liu-chang-qing-chang-sha-guo-jia-yi-zhai
+ 19. [刘长卿] 寻南溪常道士 (五言律诗) id=liu-chang-qing-xun-nan-xi-chang-dao-shi
+ 20. [刘长卿] 新年作 (五言律诗) id=liu-chang-qing-xin-nian-zuo
+ 21. [刘长卿] 秋日登吴公台上寺远眺 (五言律诗) id=liu-chang-qing-qiu-ri-deng-wu-gong-tai-shang-si-yuan-tiao
+ 22. [刘长卿] 送李中丞归汉阳别业 (五言律诗) id=liu-chang-qing-song-li-zhong-cheng-gui-han-yang-bie-ye
+ 23. [刘长卿] 饯别王十一南游 (五言律诗) id=liu-chang-qing-jian-bie-wang-shi-yi-nan-you
+ 24. [刘长卿] 听弹琴 (五言绝句) id=liu-chang-qing-ting-tan-qin
+ 25. [刘长卿] 送上人 (五言绝句) id=liu-chang-qing-song-shang-ren
+ 26. [刘长卿] 送灵澈上人 (五言绝句) id=liu-chang-qing-song-ling-che-shang-ren
+ 27. [卢纶] 晚次鄂州 (七言律诗) id=lu-lun-wan-ci-e-zhou
+ 28. [卢纶] 送李端 (五言律诗) id=lu-lun-song-li-duan
+ 29. [卢纶] 塞下曲四首·其一 (五言绝句) id=lu-lun-sa-xia-qu-si-shou-qi-yi
+ 30. [卢纶] 塞下曲四首·其三 (五言绝句) id=lu-lun-sa-xia-qu-si-shou-qi-san
+ 31. [卢纶] 塞下曲四首·其二 (五言绝句) id=lu-lun-sa-xia-qu-si-shou-qi-er
+ 32. [卢纶] 塞下曲四首·其四 (五言绝句) id=lu-lun-sa-xia-qu-si-shou-qi-si
+ 33. [司空曙] 云阳馆与韩绅宿别 (五言律诗) id=si-kong-shu-yun-yang-guan-yu-han-shen-su-bie
+ 34. [司空曙] 喜外弟卢纶见宿 (五言律诗) id=si-kong-shu-xi-wai-di-lu-lun-jian-su
+ 35. [司空曙] 贼平后送人北归 (五言律诗) id=si-kong-shu-zei-ping-hou-song-ren-bei-gui
+ 36. [唐玄宗] 经邹鲁祭孔子而叹之 (五言律诗) id=tang-xuan-zong-jing-zou-lu-ji-kong-zi-er-tan-zhi
+ 37. [孟浩然] 夜归鹿门山歌 (七言古诗) id=meng-hao-ran-ye-gui-lu-men-shan-ge
+ 38. [孟浩然] 夏日南亭怀辛大 (五言古诗) id=meng-hao-ran-xia-ri-nan-ting-huai-xin-da
+ 39. [孟浩然] 宿业师山房待丁大不至 (五言古诗) id=meng-hao-ran-su-ye-shi-shan-fang-dai-ding-da-bu-zhi
+ 40. [孟浩然] 秋登兰山寄张五 (五言古诗) id=meng-hao-ran-qiu-deng-lan-shan-ji-zhang-wu
+ 41. [孟浩然] 与诸子登岘山 (五言律诗) id=meng-hao-ran-yu-zhu-zi-deng-xian-shan
+ 42. [孟浩然] 宴梅道士山房 (五言律诗) id=meng-hao-ran-yan-mei-dao-shi-shan-fang
+ 43. [孟浩然] 宿桐庐江寄广陵旧游 (五言律诗) id=meng-hao-ran-su-tong-lu-jiang-ji-guang-ling-jiu-you
+ 44. [孟浩然] 岁暮归南山 (五言律诗) id=meng-hao-ran-sui-mu-gui-nan-shan
+ 45. [孟浩然] 早寒有怀 (五言律诗) id=meng-hao-ran-zao-han-you-huai
+ 46. [孟浩然] 望洞庭湖赠张丞相 (五言律诗) id=meng-hao-ran-wang-dong-ting-hu-zeng-zhang-cheng-xiang
+ 47. [孟浩然] 留别王维 (五言律诗) id=meng-hao-ran-liu-bie-wang-wei
+ 48. [孟浩然] 秦中寄远上人 (五言律诗) id=meng-hao-ran-qin-zhong-ji-yuan-shang-ren
+ 49. [孟浩然] 过故人庄 (五言律诗) id=meng-hao-ran-guo-gu-ren-zhuang
+ 50. [孟浩然] 宿建德江 (五言绝句) id=meng-hao-ran-su-jian-de-jiang
+ 51. [孟浩然] 春晓 (五言绝句) id=meng-hao-ran-chun-xiao
+ 52. [宋之问] 题大庾岭北驿 (五言律诗) id=song-zhi-wen-ti-da-yu-ling-bei-yi
+ 53. [宋之问] 渡汉江 (五言绝句) id=song-zhi-wen-du-han-jiang
+ 54. [岑参] 白雪歌送武判官归京 (七言古诗 · 乐府) id=cen-shen-bai-xue-ge
+ 55. [岑参] 走马川行奉送出师西征 (七言古诗 · 乐府) id=cen-shen-zou-ma-chuan-xing
+ 56. [岑参] 轮台歌奉送封大夫出师西征 (七言古诗 · 乐府) id=cen-shen-lun-tai-ge
+ 57. [岑参] 奉和中书舍人贾至早朝 (七言律诗) id=cen-shen-he-jia-she-ren-zao-chao
+ 58. [岑参] 逢入京使 (七言绝句) id=cen-shen-feng-ru-jing-shi
+ 59. [岑参] 与高适薛据同登慈恩寺浮图 (五言古诗) id=cen-shen-yu-gao-shi-xue-ju-deng-ci-en-si-fu-tu
+ 60. [岑参] 寄左省杜拾遗 (五言律诗) id=cen-shen-ji-zuo-sheng-du-shi-yi
+ 61. [崔曙] 九日登望仙台呈刘明府 (七言律诗) id=cui-shu-jiu-ri-deng-wang-xian-tai-cheng-liu-ming-fu
+ 62. [崔涂] 孤雁 (五言律诗) id=cui-tu-gu-yan
+ 63. [崔涂] 除夜有怀 (五言律诗) id=cui-tu-chu-ye-you-huai
+ 64. [崔颢] 行经华阴 (七言律诗) id=cui-hao-xing-jing-hua-yin
+ 65. [崔颢] 黄鹤楼 (七言律诗) id=cui-hao-huang-he-lou
+ 66. [崔颢] 长干行·其一 (七言绝句) id=cui-hao-chang-gan-xing-qi-yi
+ 67. [崔颢] 长干行·其二 (七言绝句) id=cui-hao-chang-gan-xing-qi-er
+ 68. [常建] 题破山寺后禅院 (五言律诗) id=chang-jian-ti-po-shan-si-hou-chan-yuan
+ 69. [张乔] 书边事 (五言律诗) id=zhang-qiao-shu-bian-shi
+ 70. [张九龄] 感遇十二首·其一 (五言古诗) id=zhang-jiu-ling-gan-yu-shi-er-shou-qi-yi
+ 71. [张九龄] 感遇十二首·其七 (五言古诗) id=zhang-jiu-ling-gan-yu-shi-er-shou-qi-qi
+ 72. [张九龄] 感遇十二首·其四 (五言古诗) id=zhang-jiu-ling-gan-yu-shi-er-shou-qi-si
+ 73. [张九龄] 望月怀远 (五言律诗) id=zhang-jiu-ling-wang-yue-huai-yuan
+ 74. [张九龄] 自君之出矣 (五言绝句) id=zhang-jiu-ling-zi-jun-zhi-chu-yi
+ 75. [张旭] 桃花溪 (七言绝句) id=zhang-xu-tao-hua-xi
+ 76. [张泌] 寄人 (七言绝句) id=zhang-mi-ji-ren
+ 77. [张祜] 赠内人 (七言绝句) id=zhang-hu-zeng-nei-ren
+ 78. [张祜] 集灵台·其一 (七言绝句) id=zhang-hu-ji-ling-tai-qi-yi
+ 79. [张祜] 集灵台·其二 (七言绝句) id=zhang-hu-ji-ling-tai-qi-er
+ 80. [张祜] 题金陵渡 (七言绝句) id=zhang-hu-ti-jin-ling-du
+ 81. [张祜] 宫词 (五言绝句) id=zhang-hu-gong-ci
+ 82. [张籍] 没蕃故人 (五言律诗) id=zhang-ji-mei-bo-gu-ren
+ 83. [张继] 枫桥夜泊 (七言绝句) id=zhang-ji-feng-qiao-ye-bo
+ 84. [戴叔伦] 江乡故人偶集客舍 (五言律诗) id=dai-shu-lun-jiang-xiang-gu-ren-ou-ji-ke-she
+ 85. [朱庆馀] 宫中词 (七言绝句) id=zhu-qing-yu-gong-zhong-ci
+ 86. [朱庆馀] 近试上张水部 (七言绝句) id=zhu-qing-yu-jin-shi-shang-zhang-shui-bu
+ 87. [权德舆] 玉台体 (五言绝句) id=quan-de-yu-yu-tai-ti
+ 88. [李商隐] 韩碑 (七言古诗) id=li-shang-yin-han-bei
+ 89. [李商隐] 无题·凤尾香罗薄几重 (七言律诗) id=li-shang-yin-wu-ti-feng-wei
+ 90. [李商隐] 无题·昨夜星辰昨夜风 (七言律诗) id=li-shang-yin-wu-ti-zuo-ye
+ 91. [李商隐] 无题·来是空言去绝踪 (七言律诗) id=li-shang-yin-wu-ti-lai-shi
+ 92. [李商隐] 无题·相见时难别亦难 (七言律诗) id=li-shang-yin-wu-ti-xiang-jian
+ 93. [李商隐] 无题·重帏深下莫愁堂 (七言律诗) id=li-shang-yin-wu-ti-zhong-wei
+ 94. [李商隐] 无题·飒飒东风细雨来 (七言律诗) id=li-shang-yin-wu-ti-sa-sa
+ 95. [李商隐] 春雨 (七言律诗) id=li-shang-yin-chun-yu
+ 96. [李商隐] 筹笔驿 (七言律诗) id=li-shang-yin-chou-bi-yi
+ 97. [李商隐] 锦瑟 (七言律诗) id=li-shang-yin-jin-se
+ 98. [李商隐] 隋宫 (七言律诗) id=li-shang-yin-sui-gong-lv
+ 99. [李商隐] 为有 (七言绝句) id=li-shang-yin-wei-you
+100. [李商隐] 夜雨寄北 (七言绝句) id=li-shang-yin-ye-yu-ji-bei
+101. [李商隐] 嫦娥 (七言绝句) id=li-shang-yin-chang-e
+102. [李商隐] 寄令狐郎中 (七言绝句) id=li-shang-yin-ji-ling-hu-lang-zhong
+103. [李商隐] 瑶池 (七言绝句) id=li-shang-yin-yao-chi
+104. [李商隐] 贾生 (七言绝句) id=li-shang-yin-jia-sheng
+105. [李商隐] 隋宫 (七言绝句) id=li-shang-yin-sui-gong-jue
+106. [李商隐] 凉思 (五言律诗) id=li-shang-yin-liang-si
+107. [李商隐] 北青萝 (五言律诗) id=li-shang-yin-bei-qing-luo
+108. [李商隐] 落花 (五言律诗) id=li-shang-yin-luo-hua
+109. [李商隐] 蝉 (五言律诗) id=li-shang-yin-chan
+110. [李商隐] 风雨 (五言律诗) id=li-shang-yin-feng-yu
+111. [李商隐] 登乐游原 (五言绝句) id=li-shang-yin-deng-le-you-yuan
+112. [李白] 庐山谣寄卢侍御虚舟 (七言古诗) id=li-bai-lu-shan-yao-ji-lu-shi-yu-xu-zhou
+113. [李白] 登金陵凤凰台 (七言律诗) id=li-bai-deng-jin-ling-feng-huang-tai
+114. [李白] 金陵酒肆留别 (七言绝句) id=li-bai-jin-ling-jiu-si-liu-bie
+115. [李白] 下终南山过斛斯山人宿置酒 (五言古诗) id=li-bai-xia-zhong-nan-shan-guo-hu-si-shan-ren-su-jiu
+116. [李白] 月下独酌四首·其一 (五言古诗) id=li-bai-yue-xia-du-zhuo-qi-yi
+117. [李白] 春思 (五言古诗 · 乐府) id=li-bai-chun-si
+118. [李白] 听蜀僧濬弹琴 (五言律诗) id=li-bai-ting-shu-seng-jun-tan-qin
+119. [李白] 夜泊牛渚怀古 (五言律诗) id=li-bai-ye-bo-niu-zhu-huai-gu
+120. [李白] 渡荆门送别 (五言律诗) id=li-bai-du-jing-men-song-bie
+121. [李白] 赠孟浩然 (五言律诗) id=li-bai-zeng-meng-hao-ran
+122. [李白] 送友人 (五言律诗) id=li-bai-song-you-ren
+123. [李白] 怨情 (五言绝句) id=li-bai-yuan-qing
+124. [李益] 夜上受降城闻笛 (七言绝句) id=li-yi-ye-shang-shou-jiang-cheng-wen-di
+125. [李益] 喜见外弟又言别 (五言律诗) id=li-yi-xi-jian-wai-di-you-yan-bie
+126. [李益] 江南曲 (五言绝句) id=li-yi-jiang-nan-qu
+127. [李端] 听筝 (五言绝句) id=li-duan-ting-zheng
+128. [李颀] 送陈章甫 (七言古诗) id=li-qi-song-chen-zhang-fu
+129. [李颀] 古从军行 (七言古诗 · 乐府) id=li-qi-gu-cong-jun-xing
+130. [李颀] 古意 (七言古诗 · 乐府) id=li-qi-gu-yi
+131. [李颀] 听安万善吹觱篥歌 (七言古诗 · 乐府) id=li-qi-ting-an-wan-shan-chui-bi-li-ge
+132. [李颀] 听董大弹胡笳声兼寄语弄房给事 (七言古诗 · 乐府) id=li-qi-ting-dong-da-tan-hu-jia-sheng
+133. [李颀] 琴歌 (七言古诗 · 乐府) id=li-qi-qin-ge
+134. [李颀] 送魏万之京 (七言律诗) id=li-qi-song-wei-wan-zhi-jing
+135. [杜审言] 和晋陵陆丞早春游望 (五言律诗) id=du-shen-yan-he-jin-ling-lu-cheng-zao-chun-you-wang
+136. [杜牧] 寄扬州韩绰判官 (七言绝句) id=du-mu-ji-yang-zhou-han-chuo-pan-guan
+137. [杜牧] 将赴吴兴登乐游原一绝 (七言绝句) id=du-mu-jiang-fu-wu-xing-deng-le-you-yuan-yi-jue
+138. [杜牧] 泊秦淮 (七言绝句) id=du-mu-bo-qin-huai
+139. [杜牧] 秋夕 (七言绝句) id=du-mu-qiu-xi
+140. [杜牧] 赠别·其一 (七言绝句) id=du-mu-zeng-bie-qi-yi
+141. [杜牧] 赠别·其二 (七言绝句) id=du-mu-zeng-bie-qi-er
+142. [杜牧] 赤壁 (七言绝句) id=du-mu-chi-bi
+143. [杜牧] 遣怀 (七言绝句) id=du-mu-qian-huai
+144. [杜牧] 金谷园 (七言绝句) id=du-mu-jin-gu-yuan
+145. [杜牧] 旅宿 (五言律诗) id=du-mu-lv-su
+146. [杜甫] 丹青引赠曹霸将军 (七言古诗) id=du-fu-dan-qing-yin-zeng-cao-ba-jiang-jun
+147. [杜甫] 古柏行 (七言古诗) id=du-fu-gu-bai-xing
+148. [杜甫] 寄韩谏议 (七言古诗) id=du-fu-ji-han-jian-yi
+149. [杜甫] 观公孙大娘弟子舞剑器行 (七言古诗) id=du-fu-guan-gong-sun-da-niang-di-zi-wu-jian-qi-xing
+150. [杜甫] 韦讽录事宅观曹将军画马图 (七言古诗) id=du-fu-wei-feng-lu-shi-zhai-guan-cao-jiang-jun-hua-ma-tu
+151. [杜甫] 咏怀古迹·其一 (七言律诗) id=du-fu-yong-huai-gu-ji-qi-yi
+152. [杜甫] 咏怀古迹·其三 (七言律诗) id=du-fu-yong-huai-gu-ji-qi-san
+153. [杜甫] 咏怀古迹·其二 (七言律诗) id=du-fu-yong-huai-gu-ji-qi-er
+154. [杜甫] 咏怀古迹·其五 (七言律诗) id=du-fu-yong-huai-gu-ji-qi-wu
+155. [杜甫] 咏怀古迹·其四 (七言律诗) id=du-fu-yong-huai-gu-ji-qi-si
+156. [杜甫] 客至 (七言律诗) id=du-fu-ke-zhi
+157. [杜甫] 宿府 (七言律诗) id=du-fu-su-fu
+158. [杜甫] 登楼 (七言律诗) id=du-fu-deng-lou
+159. [杜甫] 登高 (七言律诗) id=du-fu-deng-gao
+160. [杜甫] 蜀相 (七言律诗) id=du-fu-shu-xiang
+161. [杜甫] 野望 (七言律诗) id=du-fu-ye-wang
+162. [杜甫] 闻官军收河南河北 (七言律诗) id=du-fu-wen-guan-jun-shou-he-nan-he-bei
+163. [杜甫] 阁夜 (七言律诗) id=du-fu-ge-ye
+164. [杜甫] 江南逢李龟年 (七言绝句) id=du-fu-jiang-nan-feng-li-gui-nian
+165. [杜甫] 丽人行 (乐府) id=du-fu-li-ren-xing
+166. [杜甫] 兵车行 (乐府) id=du-fu-bing-che-xing
+167. [杜甫] 哀江头 (乐府) id=du-fu-ai-jiang-tou
+168. [杜甫] 哀王孙 (乐府) id=du-fu-ai-wang-sun
+169. [杜甫] 佳人 (五言古诗) id=du-fu-jia-ren
+170. [杜甫] 望岳 (五言古诗) id=du-fu-wang-yue
+171. [杜甫] 梦李白·其一 (五言古诗) id=du-fu-meng-li-bai-qi-yi
+172. [杜甫] 梦李白·其二 (五言古诗) id=du-fu-meng-li-bai-qi-er
+173. [杜甫] 赠卫八处士 (五言古诗) id=du-fu-zeng-wei-ba-chu-shi
+174. [杜甫] 别房太尉墓 (五言律诗) id=du-fu-bie-fang-tai-wei-mu
+175. [杜甫] 天末怀李白 (五言律诗) id=du-fu-tian-mo-huai-li-bai
+176. [杜甫] 奉济驿重送严公四韵 (五言律诗) id=du-fu-feng-ji-yi-zhong-song-yan-gong-si-yun
+177. [杜甫] 旅夜书怀 (五言律诗) id=du-fu-lv-ye-shu-huai
+178. [杜甫] 春宿左省 (五言律诗) id=du-fu-chun-su-zuo-sheng
+179. [杜甫] 春望 (五言律诗) id=du-fu-chun-wang
+180. [杜甫] 月夜 (五言律诗) id=du-fu-yue-ye
+181. [杜甫] 月夜忆舍弟 (五言律诗) id=du-fu-yue-ye-yi-she-di
+182. [杜甫] 登岳阳楼 (五言律诗) id=du-fu-deng-yue-yang-lou
+183. [杜甫] 至德二载甫自京金光门出 (五言律诗) id=du-fu-zhi-de-er-zai-fu-zi-jing-jin-guang-men
+184. [杜甫] 八阵图 (五言绝句) id=du-fu-ba-zhen-tu
+185. [杜荀鹤] 春宫怨 (五言律诗) id=du-xun-he-chun-gong-yuan
+186. [柳中庸] 征人怨 (七言绝句) id=liu-zhong-yong-zheng-ren-yuan
+187. [柳宗元] 登柳州城楼寄漳汀封连四州 (七言律诗) id=liu-zong-yuan-deng-liu-zhou-cheng-lou
+188. [柳宗元] 晨诣超师院读禅经 (五言古诗) id=liu-zong-yuan-chen-yi-chao-shi-yuan-du-chan-jing
+189. [柳宗元] 溪居 (五言古诗) id=liu-zong-yuan-xi-ju
+190. [柳宗元] 江雪 (五言绝句) id=liu-zong-yuan-jiang-xue
+191. [沈佺期] 杂诗三首·其三 (五言律诗) id=shen-quan-qi-za-shi-san-shou-qi-san
+192. [温庭筠] 利州南渡 (七言律诗) id=wen-ting-yun-li-zhou-nan-du
+193. [温庭筠] 苏武庙 (七言律诗) id=wen-ting-yun-su-wu-miao
+194. [温庭筠] 瑶瑟怨 (七言绝句) id=wen-ting-yun-yao-se-yuan
+195. [温庭筠] 送人东游 (五言律诗) id=wen-ting-yun-song-ren-dong-you
+196. [王之涣] 登鹳雀楼 (五言绝句) id=wang-zhi-huan-deng-guan-que-lou
+197. [王勃] 送杜少府之任蜀州 (五言律诗) id=wang-bo-song-du-shao-fu-zhi-ren-shu-zhou
+198. [王建] 新嫁娘词 (五言绝句) id=wang-jian-xin-jia-niang-ci
+199. [王昌龄] 春宫曲 (七言绝句) id=wang-chang-ling-chun-gong-qu
+200. [王昌龄] 芙蓉楼送辛渐 (七言绝句) id=wang-chang-ling-fu-rong-lou-song-xin-jian
+201. [王昌龄] 闺怨 (七言绝句) id=wang-chang-ling-gui-yuan
+202. [王昌龄] 出塞 (乐府) id=wang-chang-ling-chu-sai
+203. [王昌龄] 塞上曲 (乐府) id=wang-chang-ling-sai-shang-qu
+204. [王昌龄] 塞下曲 (乐府) id=wang-chang-ling-sai-xia-qu
+205. [王昌龄] 长信秋词五首·其三 (乐府) id=wang-chang-ling-chang-xin-qiu-ci-qi-san
+206. [王湾] 次北固山下 (五言律诗) id=wang-wan-ci-bei-gu-shan-xia
+207. [王维] 和贾舍人早朝大明宫之作 (七言律诗) id=wang-wei-he-jia-she-ren-zao-chao-da-ming-gong-zhi-zuo
+208. [王维] 奉和圣制从蓬莱向兴庆阁道 (七言律诗) id=wang-wei-feng-he-sheng-zhi-cong-peng-lai-xiang-xing-qing-ge-dao
+209. [王维] 积雨辋川庄作 (七言律诗) id=wang-wei-ji-yu-wang-chuan-zhuang-zuo
+210. [王维] 赠郭给事 (七言律诗) id=wang-wei-zeng-guo-ji-shi
+211. [王维] 九月九日忆山东兄弟 (七言绝句) id=wang-wei-jiu-yue-jiu-ri-yi-shan-dong-xiong-di
+212. [王维] 桃源行 (乐府) id=wang-wei-tao-yuan-xing
+213. [王维] 洛阳女儿行 (乐府) id=wang-wei-luo-yang-nv-er-xing
+214. [王维] 渭城曲 (乐府) id=wang-wei-wei-cheng-qu
+215. [王维] 秋夜曲 (乐府) id=wang-wei-qiu-ye-qu
+216. [王维] 老将行 (乐府) id=wang-wei-lao-jiang-xing
+217. [王维] 渭川田家 (五言古诗) id=wang-wei-wei-chuan-tian-jia
+218. [王维] 西施咏 (五言古诗) id=wang-wei-xi-shi-yong
+219. [王维] 送别 (五言古诗) id=wang-wei-song-bie
+220. [王维] 送綦毋潜落第还乡 (五言古诗) id=wang-wei-song-qi-wu-qian-luo-di-huan-xiang
+221. [王维] 青溪 (五言古诗) id=wang-wei-qing-xi
+222. [王维] 山居秋暝 (五言律诗) id=wang-wei-shan-ju-qiu-ming
+223. [王维] 归嵩山作 (五言律诗) id=wang-wei-gui-song-shan-zuo
+224. [王维] 汉江临眺 (五言律诗) id=wang-wei-han-jiang-lin-tiao
+225. [王维] 终南别业 (五言律诗) id=wang-wei-zhong-nan-bie-ye
+226. [王维] 终南山 (五言律诗) id=wang-wei-zhong-nan-shan
+227. [王维] 辋川闲居赠裴秀才迪 (五言律诗) id=wang-wei-wang-chuan-xian-ju-zeng-pei-xiu-cai-di
+228. [王维] 过香积寺 (五言律诗) id=wang-wei-guo-xiang-ji-si
+229. [王维] 送梓州李使君 (五言律诗) id=wang-wei-song-zi-zhou-li-shi-jun
+230. [王维] 酬张少府 (五言律诗) id=wang-wei-chou-zhang-shao-fu
+231. [王维] 山中送别 (五言绝句) id=wang-wei-shan-zhong-song-bie
+232. [王维] 杂诗 (五言绝句) id=wang-wei-za-shi
+233. [王维] 相思 (五言绝句) id=wang-wei-xiang-si
+234. [王维] 竹里馆 (五言绝句) id=wang-wei-zhu-li-guan
+235. [王维] 鹿柴 (五言绝句) id=wang-wei-lu-zhai
+236. [王翰] 凉州词 (七言绝句) id=wang-han-liang-zhou-ci
+237. [白居易] 望月有感 (七言律诗) id=bai-ju-yi-wang-yue-you-gan
+238. [白居易] 钱塘湖春行 (七言律诗) id=bai-ju-yi-qian-tang-hu-chun-xing
+239. [白居易] 后宫词 (七言绝句) id=bai-ju-yi-hou-gong-ci
+240. [白居易] 暮江吟 (七言绝句) id=bai-ju-yi-mu-jiang-yin
+241. [白居易] 赋得古原草送别 (五言律诗) id=bai-ju-yi-fu-de-gu-yuan-cao-song-bie
+242. [白居易] 问刘十九 (五言绝句) id=bai-ju-yi-wen-liu-shi-jiu
+243. [皇甫冉] 春思 (七言律诗) id=huang-fu-ran-chun-si
+244. [皎然] 寻陆鸿渐不遇 (五言律诗) id=jiao-ran-xun-lu-hong-jian-bu-yu
+245. [祖咏] 终南望余雪 (五言绝句) id=zu-yong-zhong-nan-wang-yu-xue
+246. [秦韬玉] 贫女 (七言律诗) id=qin-tao-yu-pin-nu
+247. [薛逢] 宫词 (七言律诗) id=xue-feng-gong-ci
+248. [裴迪] 送崔九 (五言绝句) id=pei-di-song-cui-jiu
+249. [西鄙人] 哥舒歌 (五言绝句) id=xi-bi-ren-ge-shu-ge
+250. [许浑] 早秋 (五言律诗) id=xu-hun-zao-qiu
+251. [许浑] 秋日赴阙题潼关驿楼 (五言律诗) id=xu-hun-qiuri-fu-que-ti-tong-guan-yi-lou
+252. [贺知章] 回乡偶书 (七言绝句) id=he-zhi-zhang-hui-xiang-ou-shu
+253. [贾岛] 寻隐者不遇 (五言绝句) id=jia-dao-xun-yin-zhe-bu-yu
+254. [郑畋] 马嵬坡 (七言绝句) id=zheng-tian-ma-wei-po
+255. [金昌绪] 春怨 (五言绝句) id=jin-chang-xu-chun-yuan
+256. [钱起] 赠阙下裴舍人 (七言律诗) id=qian-qi-zeng-que-xia-pei-she-ren
+257. [钱起] 谷口书斋寄杨补阙 (五言律诗) id=qian-qi-gu-kou-shu-zhai-ji-yang-bu-que
+258. [钱起] 送僧归日本 (五言律诗) id=qian-qi-song-seng-gui-ri-ben
+259. [陈陶] 陇西行 (七言绝句) id=chen-tao-long-xi-xing
+260. [韦庄] 金陵图 (七言绝句) id=wei-zhuang-jin-ling-tu
+261. [韦应物] 寄李儋元锡 (七言律诗) id=wei-ying-wu-ji-li-dan-yuan-xi
+262. [韦应物] 滁州西涧 (七言绝句) id=wei-ying-wu-chu-zhou-xi-jian
+263. [韦应物] 东郊 (五言古诗) id=wei-ying-wu-dong-jiao
+264. [韦应物] 初发扬子寄元大校书 (五言古诗) id=wei-ying-wu-chu-fa-yang-zi-ji-yuan-da-xiao-shu
+265. [韦应物] 夕次盱眙县 (五言古诗) id=wei-ying-wu-xi-ci-xu-yi-xian
+266. [韦应物] 寄全椒山中道士 (五言古诗) id=wei-ying-wu-ji-quan-jiao-shan-zhong-dao-shi
+267. [韦应物] 送杨氏女 (五言古诗) id=wei-ying-wu-song-yang-shi-nv
+268. [韦应物] 郡斋雨中与诸文士燕集 (五言古诗) id=wei-ying-wu-jun-zhai-yu-zhong-yu-zhu-wen-shi-yan-ji
+269. [韦应物] 长安遇冯著 (五言古诗) id=wei-ying-wu-chang-an-yu-feng-zhu
+270. [韦应物] 淮上喜会梁州故人 (五言律诗) id=wei-ying-wu-huai-shang-xi-hui-liang-zhou-gu-ren
+271. [韦应物] 赋得暮雨送李曹 (五言律诗) id=wei-ying-wu-fu-de-mu-yu-song-li-cao
+272. [韦应物] 秋夜寄邱员外 (五言绝句) id=wei-ying-wu-qiu-ye-ji-qiu-yuan-wai
+273. [韩偓] 已凉 (七言绝句) id=han-wo-yi-liang
+274. [韩愈] 石鼓歌 (七言古诗) id=han-yu-shi-gu-ge
+275. [韩愈] 早春呈水部张十八员外 (七言绝句) id=han-yu-zao-chun-cheng-shui-bu-zhang-shi-ba-yuan-wai
+276. [韩愈] 春雪 (七言绝句) id=han-yu-chun-xue
+277. [韩愈] 晚春 (七言绝句) id=han-yu-wan-chun
+278. [韩翃] 同题仙游观 (七言律诗) id=han-hong-tong-ti-xian-you-guan
+279. [韩翃] 寒食 (七言绝句) id=han-hong-han-shi
+280. [韩翃] 酬程延秋夜即事见赠 (五言律诗) id=han-hong-chou-cheng-yan-qiu-ye-ji-shi-jian-zeng
+281. [顾况] 宫词 (七言绝句) id=gu-kuang-gong-ci
+282. [马戴] 楚江怀古三首·其一 (五言律诗) id=ma-dai-chu-jiang-huai-gu-san-shou-qi-yi
+283. [马戴] 灞上秋居 (五言律诗) id=ma-dai-ba-shang-qiu-ju
+284. [骆宾王] 在狱咏蝉 (五言律诗) id=luo-bin-wang-zai-yu-yong-chan
+285. [高适] 燕歌行 (七言古诗 · 乐府) id=gao-shi-yan-ge-xing
+286. [高适] 送李少府贬峡中王少府贬长沙 (七言律诗) id=gao-shi-song-li-shao-fu-bian-xia-zhong-wang-shao-fu-bian-chang-sha

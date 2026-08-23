@@ -1,0 +1,10 @@
+{
+	"type": "gh",
+	"name": "chinese-poetry/chinese-poetry",
+	"version": "latest",
+	"status": 403,
+	"message": "Package size exceeded the configured limit of 50 MB.",
+	"links": {
+		"stats": "https://data.jsdelivr.com/v1/stats/packages/gh/chinese-poetry/chinese-poetry@latest"
+	}
+}
