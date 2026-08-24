@@ -2,7 +2,7 @@
   "use strict";
   window.OPTIMIZED_POEM_PAGE = true;
 
-  var poetIndex = window.POETS_INDEX || {};
+  var poetIndex = window.POET_SLIM || {};
   var loadedScripts = {};
   var modal = document.getElementById("poetModal");
   var modalBox = modal.querySelector(".poet-modal");
@@ -350,31 +350,40 @@
 
   function renderAside(id, author, poetMatch) {
     var aside = document.getElementById("poetAside");
+    // slim 索引字段：[0]=名 [1]=印章 [2]=英文名 [3]=有生平 [4]=分片号
     var profile = poetMatch ? poetMatch.data : null;
     var slug = poetMatch ? poetMatch.slug : "";
     var name = profile ? profile[0] : author;
-    var seal = profile ? profile[1] : (author ? author[0] : "唐");
+    var seal = profile ? profile[1] : (author ? author.charAt(0) : "唐");
     var nameEn = profile ? profile[2] : "";
-    var summary = profile ? profile[4] : "";
     var poetName = slug ? '<a href="./poet.html?id=' + encodeURIComponent(slug) + '">' + esc(name) + "</a>" : esc(name);
 
     aside.innerHTML =
       '<div class="poet-card" data-seal-char="' + esc(seal) + '"><div class="label">POET · 诗人</div><div class="name">' + poetName + "</div>" +
       (nameEn ? '<div class="name-en">' + esc(nameEn) + "</div>" : "") +
-      '<p class="summary">' + esc(summary) + "</p>" +
-      (profile && profile[6] ? '<button class="expand-btn" id="poetBtn" type="button">查看生平 <span class="arrow">▾</span></button>' : "") +
+      '<p class="summary" id="asideSummary"></p>' +
+      (profile && profile[3] ? '<button class="expand-btn" id="poetBtn" type="button">查看生平 <span class="arrow">▾</span></button>' : "") +
       '</div><div id="samePoetContainer"></div>';
 
-    var biographyButton = document.getElementById("poetBtn");
-    if (biographyButton) setupBiographyButton(biographyButton, slug, profile);
     if (!profile || !slug) return;
 
-    loadScript("./assets/js/poet-work-shards/" + profile[8] + ".js?v=15").then(function () {
+    // 简介/同作者列表随对应分片异步补全，不阻塞正文渲染
+    loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=15").then(function () {
+      var bio = (window.POET_BIO || {})[slug];
+      if (!bio) return;
+      var summaryBox = document.getElementById("asideSummary");
+      if (summaryBox && bio[1]) summaryBox.textContent = bio[1];
+    }).catch(function () { /* 侧栏简介缺失不影响正文 */ });
+
+    loadScript("./assets/js/poet-work-shards/" + profile[4] + ".js?v=15").then(function () {
       var works = (window.POET_WORKS || {})[slug] || [];
       renderSamePoetWorks(id, author, slug, works);
     }).catch(function () {
       document.getElementById("samePoetContainer").innerHTML = '<p class="section-body">同作者诗作载入失败。</p>';
     });
+
+    var biographyButton = document.getElementById("poetBtn");
+    if (biographyButton) setupBiographyButton(biographyButton, slug, profile);
   }
 
   function renderSamePoetWorks(id, author, slug, works) {
@@ -399,12 +408,13 @@
       button.setAttribute("aria-busy", "true");
       var original = button.innerHTML;
       button.textContent = "正在载入生平…";
-      loadScript("./assets/js/poets-data.js?v=15").then(function () {
-        var poet = (window.POETS_DATA || {})[slug];
-        if (!poet) throw new Error("未找到诗人生平");
-        document.getElementById("modalName").textContent = poet.name || profile[0];
-        document.getElementById("modalSub").textContent = poet.sub || profile[5] || profile[2] || profile[3] || "唐";
-        document.getElementById("modalLife").innerHTML = (poet.life || []).map(function (paragraph) { return "<p>" + esc(paragraph) + "</p>"; }).join("");
+      // 生平数据在 bio 分片（约 33KB/片）；分片已随侧栏加载，此处通常直接命中
+      loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=15").then(function () {
+        var bio = (window.POET_BIO || {})[slug];
+        if (!bio) throw new Error("未找到诗人生平");
+        document.getElementById("modalName").textContent = profile[0] || "";
+        document.getElementById("modalSub").textContent = bio[4] || bio[3] || "";
+        document.getElementById("modalLife").innerHTML = (bio[0] || []).map(function (paragraph) { return "<p>" + esc(paragraph) + "</p>"; }).join("");
         openModal(button);
       }).catch(function () {
         button.textContent = "生平载入失败，请重试";

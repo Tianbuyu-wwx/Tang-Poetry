@@ -77,88 +77,17 @@
   <div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div>
 </footer>
 
-<script src="./assets/js/poets-data.js?v=15" defer></script>
-<script src="./assets/js/poets-index.js?v=15" defer></script>
+<script src="./assets/js/poet-slim.js?v=15" defer></script>
 <script src="./assets/js/page-poet.js?v=15" defer></script>
 <script>
+/* 降级兜底：page-poet.js 因故未执行时给出可读提示。
+   完整渲染逻辑在 page-poet.js（poet-slim + 作品/生平分片按需加载）。 */
 (function () {
   "use strict";
   if (window.OPTIMIZED_POET_PAGE) return;
-  var PD = window.POETS_DATA || {};
-  var D = window.POEMS_DATA || {};
-  function getParam(n){ var m=new RegExp("[?&]"+n+"=([^&]*)").exec(location.search); return m?decodeURIComponent(m[1]):""; }
-  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-  var slug = getParam("id");
-  var poet = PD[slug];
   var page = document.getElementById("poetPage");
-
-  if (!poet) {
-    page.innerHTML = '<h1 class="poet-section-title">未找到诗人</h1><p class="poet-empty">未找到 slug=<code>'+esc(slug)+'</code> 的诗人。<a href="./poets.html">返回索引</a></p>';
-    return;
-  }
-
-  var name = poet.name || "佚名";
-  var seal = poet.sealChar || (name ? name[0] : "唐");
-  var pEn = poet.nameEn || (poet.sub || "");
-  var dyn = poet.dynasty || "唐";
-  var life = poet.life || [];
-  var bioSources = poet.sources || [];
-  var bioHtml = "";
-  if (life.length) {
-    for (var i=0;i<life.length;i++) bioHtml += "<p>"+esc(life[i])+"</p>";
-  } else if (poet.summary) {
-    bioHtml = "<p>"+esc(poet.summary)+"</p>";
-  } else {
-    bioHtml = '<p class="poet-empty">暂无详细生平资料。</p>';
-  }
-  var bioSourceHtml = "";
-  if (bioSources.length) {
-    var sourceLinks = [];
-    for (var si=0; si<bioSources.length; si++) {
-      var source = bioSources[si] || {};
-      if (typeof source === "string") {
-        sourceLinks.push(esc(source));
-      } else {
-        var label = source.label || source.name || source.url || "资料来源";
-        sourceLinks.push(source.url ? '<a href="'+esc(source.url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>' : esc(label));
-      }
-    }
-    bioSourceHtml = '<div class="poet-sources">生平资料来源：'+sourceLinks.join(' · ')+'</div>';
-  }
-
-  // 该诗人全部诗（按 id 顺序）
-  var works = [];
-  for (var pid in D) {
-    if (D[pid][1] && D[pid][1].replace(/\s+/g,"") === name.replace(/\s+/g,"")) {
-      works.push({ id: pid, t: D[pid][0], g: D[pid][2] || "" });
-    }
-  }
-  works.sort(function(a,b){ return a.id < b.id ? -1 : 1; });
-
-  var lis = "";
-  if (works.length) {
-    for (var w=0; w<works.length; w++) {
-      lis += '<li><a href="./poem.html?id='+encodeURIComponent(works[w].id)+'">' +
-        '<span>'+esc(works[w].t)+'</span>' +
-        (works[w].g ? '<span class="g">'+esc(works[w].g)+'</span>' : '') + '</a></li>';
-    }
-  } else {
-    lis = '<li><span class="poet-empty">《全唐诗》未收录其诗作条目。</span></li>';
-  }
-
-  page.innerHTML =
-    '<div class="poet-hero">' +
-      '<div class="big-seal">'+esc(seal)+'</div>' +
-      '<div><h1>'+esc(name)+'</h1>' +
-      '<div class="pen">'+(pEn?esc(pEn)+' · ':'')+esc(dyn)+'代 · 存诗 '+works.length+' 首</div></div>' +
-    '</div>' +
-    '<div class="poet-bio">'+bioHtml+'</div>' + bioSourceHtml +
-    '<div class="poet-section-title">诗作全集 <span class="en" style="font-size:11px;letter-spacing:3px;color:var(--ink-faint);">Works</span></div>' +
-    '<ul class="poet-works">'+lis+'</ul>';
-
-  document.title = name + " · " + (window.BRAND ? window.BRAND.name : "石湖诗社");
-  document.getElementById("crumbName").textContent = name;
+  var slug = (new RegExp("[?&]id=([^&]*)").exec(location.search) || [])[1];
+  page.innerHTML = '<h1 class="poet-section-title">诗人页加载失败</h1><p class="poet-empty">页面脚本未能载入，请刷新重试。' + (slug ? '<a href="./poets.html">返回索引</a>' : '<a href="./poets.html">返回索引</a>') + "</p>";
 })();
 </script>
 <script src="./assets/js/register-sw.js?v=15" defer></script>

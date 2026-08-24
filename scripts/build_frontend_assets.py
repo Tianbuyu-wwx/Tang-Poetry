@@ -203,9 +203,13 @@ def build_poet_assets(poems: dict, poets: dict) -> tuple[dict, dict[str, int]]:
 
     target = ASSETS / "poet-work-shards"
     reset_generated_directory(target)
+    bio_target = ASSETS / "poet-bio-shards"
+    reset_generated_directory(bio_target)
     shards: dict[str, dict] = defaultdict(dict)
+    bio_shards: dict[str, dict] = defaultdict(dict)
     poet_index = {}
     members_index = {}
+    slim_index = {}
     for position, (slug, poet) in enumerate(poets.items()):
         shard = f"{position % POET_WORK_SHARDS:02d}"
         name = poet.get("name", "")
@@ -227,6 +231,24 @@ def build_poet_assets(poems: dict, poets: dict) -> tuple[dict, dict[str, int]]:
             shard,
             is_member,
         ]
+        # 详情页瘦身索引：仅保留渲染面包屑/侧栏必需的字段，
+        # 生平与简介走 poet-bio-shards 异步加载，避免整包 poets-data.js
+        # 注意 shard 保持 "07" 式零填充字符串，前端直接拼 URL
+        slim_index[slug] = [
+            name,
+            seal,
+            poet.get("nameEn", ""),
+            bool(poet.get("life")),
+            shard,
+        ]
+        # 生平分片：与作品分片同映射，详情页一次并行拉两小片即可补全诗人资料
+        bio_shards[shard][slug] = [
+            poet.get("life") or [],
+            poet.get("summary", ""),
+            poet.get("sources") or [],
+            poet.get("dynasty", ""),
+            poet.get("sub", ""),
+        ]
         # 社员名录索引：仅 isMember 诗人，内联作品清单，使 members.html 单文件自足
         if is_member:
             members_index[slug] = [
@@ -244,11 +266,16 @@ def build_poet_assets(poems: dict, poets: dict) -> tuple[dict, dict[str, int]]:
         ASSETS / "members-index.js",
         "window.MEMBERS_INDEX=" + common.compact_json(members_index) + ";",
     )
+    common.atomic_write(ASSETS / "poet-slim.js", "window.POET_SLIM=" + common.compact_json(slim_index) + ";")
     sizes = {}
     for name, records in sorted(shards.items()):
         path = target / f"{name}.js"
         common.atomic_write(path, "window.POET_WORKS=" + common.compact_json(records) + ";")
         sizes[name] = path.stat().st_size
+    for name, records in sorted(bio_shards.items()):
+        path = bio_target / f"{name}.js"
+        common.atomic_write(path, "window.POET_BIO=" + common.compact_json(records) + ";")
+        sizes[f"bio-{name}"] = path.stat().st_size
     return poet_index, sizes
 
 
@@ -307,8 +334,11 @@ def build_assets(assets: Path = ASSETS) -> dict:
         "annotated_poems": sum(item["n"] for item in poem_index),
         "largest_poem_shard_kib": round(max(poem_sizes.values()) / 1024, 1),
         "poets": len(poet_index),
-        "poet_work_shards": len(work_sizes),
-        "largest_poet_work_shard_kib": round(max(work_sizes.values()) / 1024, 1),
+        "poet_work_shards": sum(1 for key in work_sizes if not key.startswith("bio-")),
+        "poet_bio_shards": sum(1 for key in work_sizes if key.startswith("bio-")),
+        "largest_poet_work_shard_kib": round(
+            max(size for key, size in work_sizes.items() if not key.startswith("bio-")) / 1024, 1
+        ),
         "source_books": len(source_index),
         "largest_source_book_kib": round(max(source_sizes.values()) / 1024, 1),
         "sitemap_urls": sum(sitemap_sizes.values()),
