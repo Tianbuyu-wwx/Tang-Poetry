@@ -114,6 +114,10 @@ jobs:
 
       - name: 配置 Pages
         uses: actions/configure-pages@v5
+        # enablement: true 让本步骤在 Pages 未启用时自动启用，
+        # 免得仓库重建后首跑就撞 "Get Pages site failed ... Not Found"
+        with:
+          enablement: true
 
       - name: 打包站点
         uses: actions/upload-pages-artifact@v3
