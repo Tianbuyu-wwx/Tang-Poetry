@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>页未寻得 · 石湖诗社</title>
+<style>
+  :root {
+    --paper: #faf6ed;
+    --ink: #1a1a1a;
+    --ink-light: #7a7a7a;
+    --cinnabar: #a83232;
+    --rule: rgba(26,26,26,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif SC", "STSong", "SimSun", "宋体", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+  .seal {
+    width: 72px; height: 72px;
+    margin: 0 auto 1.5rem;
+    border-radius: 6px;
+    background: var(--cinnabar);
+    color: var(--paper);
+    font-size: 40px;
+    display: grid; place-items: center;
+    box-shadow: 0 2px 10px rgba(168,50,50,0.25);
+  }
+  h1 { font-size: 1.6rem; letter-spacing: 6px; font-weight: 700; }
+  .code {
+    margin-top: .4rem;
+    font-size: .85rem;
+    color: var(--ink-light);
+    letter-spacing: 3px;
+  }
+  p.hint {
+    max-width: 30em;
+    margin: 1.2rem auto 2rem;
+    line-height: 2;
+    color: var(--ink-light);
+    font-size: .95rem;
+  }
+  nav { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+  nav a {
+    color: var(--cinnabar);
+    text-decoration: none;
+    letter-spacing: 2px;
+    padding: .4em .9em;
+    border: 1px solid rgba(168,50,50,0.35);
+    border-radius: 999px;
+    transition: background .2s, color .2s;
+  }
+  nav a:hover { background: var(--cinnabar); color: var(--paper); }
+  footer {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    text-align: center;
+    padding: 1rem;
+    font-size: .78rem;
+    color: var(--ink-light);
+    border-top: 1px solid var(--rule);
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main>
+    <div class="seal" aria-hidden="true">迷</div>
+    <h1>此页未入社库</h1>
+    <div class="code">404 · NOT FOUND</div>
+    <p class="hint">您寻访的页面不在石湖诗社的藏书之中，或已被移往别处。不妨从首页重新入门，或以诗句检索一二。</p>
+    <nav>
+      <a href="./index.html">返回首页</a>
+      <a href="./navigation.html">检索诗库</a>
+      <a href="./poets.html">诗人索引</a>
+    </nav>
+  </main>
+</div>
+<footer>石湖诗社 · 仅用于学习与赏析</footer>
+</body>
+</html>

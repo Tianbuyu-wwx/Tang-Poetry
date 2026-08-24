@@ -8,6 +8,7 @@ import os
 import re
 from collections import defaultdict
 from pathlib import Path
+from urllib.parse import quote, urlsplit
 
 from lib import common
 
@@ -16,6 +17,116 @@ ASSETS = ROOT / "website" / "assets" / "js"
 BUILD_WORK = ROOT / "scripts" / "_work"  # 完整诗库为构建中间产物，不随站点托管
 POEM_SHARD_SIZE = 500
 POET_WORK_SHARDS = 64
+WEBSITE = ROOT / "website"
+
+# 资源版本号：唯一来源。改动任何前端文件后只需在这里 +1，
+# stamp_asset_versions 会统一写进所有 HTML 与带 ?v= 的脚本，
+# 杜绝手工逐页改 v=N 造成漂移（曾出现 v13/v14 并存）。
+SITE_VERSION = 15
+SITEMAP_MAX_URLS = 40000
+STATIC_SITEMAP_PAGES = [
+    "",
+    "about.html",
+    "index.html",
+    "lessons.html",
+    "members.html",
+    "navigation.html",
+    "news.html",
+    "periodicals.html",
+    "poem.html",
+    "poet.html",
+    "poets.html",
+    "society.html",
+    "sources.html",
+]
+
+
+def pages_base_url() -> str:
+    """站点绝对地址：CI 按仓库名推导，本地回退到当前线上地址。"""
+    env_base = os.environ.get("PAGES_BASE_URL")
+    if env_base:
+        return env_base.rstrip("/")
+    repository = os.environ.get("GITHUB_REPOSITORY", "Tianbuyu-wwx/Tang-Poetry")
+    owner, _, name = repository.partition("/")
+    # 仅主机名规范为全小写；仓库路径段保留原始大小写（Pages 路径区分大小写）
+    return f"https://{owner.lower()}.github.io/{name}"
+
+
+def stamp_asset_versions() -> int:
+    """把全站 ?v=N 统一改写为 SITE_VERSION（字节级操作，保持既有换行符）。"""
+    token = f"?v={SITE_VERSION}".encode("ascii")
+    changed = 0
+    for path in sorted(WEBSITE.glob("*.html")) + sorted(ASSETS.glob("*.js")):
+        raw = path.read_bytes()
+        stamped = re.sub(rb"\?v=\d+", token, raw)
+        if stamped != raw:
+            path.write_bytes(stamped)
+            changed += 1
+    return changed
+
+
+def _sitemap_xml(urls: list) -> str:
+    body = "".join(f"    <url><loc>{url}</loc></url>\n" for url in urls)
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{body}</urlset>\n"
+    )
+
+
+def build_sitemap(poems: dict, poets: dict, sources: dict) -> dict:
+    """生成 robots.txt 与分片 sitemap。不含 lastmod，保证字节级幂等。"""
+    base = pages_base_url()
+
+    def loc(path: str) -> str:
+        return f"{base}/{path.replace('&', '&amp;')}"
+
+    groups = {
+        "static": [loc(page) for page in STATIC_SITEMAP_PAGES],
+        "poets": [loc(f"poet.html?id={quote(str(slug), safe='')}") for slug in poets],
+        "chapters": [
+            loc(f"sources.html?book={quote(str(book_id), safe='')}&chapter={index}")
+            for book_id, book in sorted(sources.items())
+            for index in range(len(book.get("chapters") or []))
+        ],
+    }
+    poem_ids = sorted(poems)
+    for start in range(0, len(poem_ids), SITEMAP_MAX_URLS):
+        part = start // SITEMAP_MAX_URLS
+        groups[f"poems-{part:03d}"] = [
+            loc(f"poem.html?id={quote(str(pid), safe='')}")
+            for pid in poem_ids[start : start + SITEMAP_MAX_URLS]
+        ]
+
+    target = WEBSITE / "sitemaps"
+    target.mkdir(exist_ok=True)
+    for stale in target.glob("*.xml"):
+        stale.unlink()
+    sizes = {}
+    for name, urls in sorted(groups.items()):
+        path = target / f"{name}.xml"
+        common.atomic_write(path, _sitemap_xml(urls))
+        sizes[name] = len(urls)
+
+    index_entries = "".join(
+        f"    <sitemap><loc>{base}/sitemaps/{name}.xml</loc></sitemap>\n" for name in sorted(groups)
+    )
+    common.atomic_write(
+        WEBSITE / "sitemap_index.xml",
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{index_entries}</sitemapindex>\n",
+    )
+    admin_path = urlsplit(base).path.rstrip("/") + "/admin/"
+    common.atomic_write(
+        WEBSITE / "robots.txt",
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Disallow: {admin_path}\n"
+        "\n"
+        f"Sitemap: {base}/sitemap_index.xml\n",
+    )
+    return sizes
 
 
 def reset_generated_directory(path: Path) -> None:
@@ -177,16 +288,20 @@ def build_source_assets(books: list) -> tuple[list, dict[str, int]]:
     return source_index, sizes
 
 
+
+
 def build_assets(assets: Path = ASSETS) -> dict:
     global ASSETS
     ASSETS = assets
     poems = common.load_js_assignment(BUILD_WORK / "poems-data.js", "POEMS_DATA")
     poets = common.load_js_assignment(ASSETS / "poets-data.js", "POETS_DATA")
-    sources = common.load_js_assignment(ASSETS / "sources-data.js", "SOURCES_DATA")
+    sources = common.load_js_assignment(BUILD_WORK / "sources-data.js", "SOURCES_DATA")
     poem_index = build_poem_index(poems)
     poem_sizes = build_poem_shards(poems)
     poet_index, work_sizes = build_poet_assets(poems, poets)
     source_index, source_sizes = build_source_assets(sources)
+    sitemap_sizes = build_sitemap(poems, poets, {book["id"]: book for book in sources})
+    stamped = stamp_asset_versions()
     stats = {
         "poem_shards": len(poem_sizes),
         "annotated_poems": sum(item["n"] for item in poem_index),
@@ -196,6 +311,9 @@ def build_assets(assets: Path = ASSETS) -> dict:
         "largest_poet_work_shard_kib": round(max(work_sizes.values()) / 1024, 1),
         "source_books": len(source_index),
         "largest_source_book_kib": round(max(source_sizes.values()) / 1024, 1),
+        "sitemap_urls": sum(sitemap_sizes.values()),
+        "sitemap_files": len(sitemap_sizes),
+        "version_stamped_files": stamped,
     }
     print(json.dumps(stats, ensure_ascii=False, indent=2))
     return stats

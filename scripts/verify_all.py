@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from lib import common
+from build_frontend_assets import SITE_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 WEBSITE = ROOT / "website"
@@ -51,8 +52,8 @@ def main() -> int:
         ASSETS / "js" / "poets-data.js",
         ASSETS / "js" / "poets-index.js",
         ASSETS / "js" / "famous-lines.js",
-        ASSETS / "js" / "sources-data.js",
         ASSETS / "js" / "sources-index.js",
+        BUILD_WORK / "sources-data.js",
         ASSETS / "js" / "site-meta.js",
         ASSETS / "js" / "page-poem.js",
         ASSETS / "js" / "page-poet.js",
@@ -80,7 +81,7 @@ def main() -> int:
     poets = common.load_js_assignment(ASSETS / "js" / "poets-data.js", "POETS_DATA")
     poet_index = common.load_js_assignment(ASSETS / "js" / "poets-index.js", "POETS_INDEX")
     famous = common.load_js_assignment(ASSETS / "js" / "famous-lines.js", "FAMOUS_LINES")
-    sources = common.load_js_assignment(ASSETS / "js" / "sources-data.js", "SOURCES_DATA")
+    sources = common.load_js_assignment(BUILD_WORK / "sources-data.js", "SOURCES_DATA")
     source_index = common.load_js_assignment(ASSETS / "js" / "sources-index.js", "SOURCES_INDEX")
     meta = common.load_js_assignment(ASSETS / "js" / "site-meta.js", "SITE_META")
 
@@ -236,6 +237,34 @@ def main() -> int:
         "assets/js/periodicals-index.js" in periodicals_page and "poems-data.js" not in periodicals_page,
         "社刊页只加载轻量社刊索引",
     )
+
+    # SEO 基础件：sitemap / robots / 版本号一致性（P1.1 + P1.3）
+    sitemap_index = WEBSITE / "sitemap_index.xml"
+    robots_txt = WEBSITE / "robots.txt"
+    check(sitemap_index.is_file() and "sitemapindex" in sitemap_index.read_text(encoding="utf-8"), "sitemap 索引存在")
+    check(robots_txt.is_file() and "Sitemap:" in robots_txt.read_text(encoding="utf-8"), "robots.txt 存在并声明 sitemap")
+    stale_versions = []
+    version_token = f"?v={SITE_VERSION}"
+    for path in list(WEBSITE.glob("*.html")) + [ASSETS / "js" / name for name in (
+        "page-poem.js", "page-poet.js", "page-sources.js",
+    )]:
+        found = set(re.findall(r"\?v=(\d+)", path.read_text(encoding="utf-8")))
+        if found and found != {str(SITE_VERSION)}:
+            stale_versions.append(f"{path.name}:{','.join(sorted(found))}")
+    check(
+        not stale_versions,
+        f"全站资源版本号统一为 ?v={SITE_VERSION}{': ' + ', '.join(stale_versions) if stale_versions else ''}",
+    )
+    sitemap_dir = WEBSITE / "sitemaps"
+    sitemap_files = sorted(p.name for p in sitemap_dir.glob("*.xml")) if sitemap_dir.is_dir() else []
+    check(bool(sitemap_files), f"sitemap 分片已生成（{len(sitemap_files)} 个文件）")
+    if sitemap_index.is_file():
+        index_text = sitemap_index.read_text(encoding="utf-8")
+        orphan_maps = [
+            name for name in sitemap_files
+            if f"/sitemaps/{name}" not in index_text
+        ]
+        check(not orphan_maps, f"sitemap 索引覆盖全部分片{': ' + ', '.join(orphan_maps) if orphan_maps else ''}")
 
     missing_links = []
     for page in WEBSITE.glob("*.html"):

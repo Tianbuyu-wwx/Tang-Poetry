@@ -6,7 +6,7 @@
 
 "use strict";
 
-var CACHE_NAME = "tang-poetry-v6";
+var CACHE_NAME = "tang-poetry-v7";
 var PRECACHE_PAGES = [
   "./",
   "./index.html",

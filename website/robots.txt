@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /Tang-Poetry/admin/
+
+Sitemap: https://tianbuyu-wwx.github.io/Tang-Poetry/sitemap_index.xml

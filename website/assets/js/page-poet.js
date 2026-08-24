@@ -112,7 +112,7 @@
     renderWorks();
   });
 
-  loadScript("./assets/js/poet-work-shards/" + indexEntry[8] + ".js?v=13").then(function () {
+  loadScript("./assets/js/poet-work-shards/" + indexEntry[8] + ".js?v=15").then(function () {
     works = (window.POET_WORKS || {})[slug] || [];
     renderWorks();
   }).catch(function () {

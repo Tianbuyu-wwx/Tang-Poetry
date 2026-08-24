@@ -369,7 +369,7 @@
     if (biographyButton) setupBiographyButton(biographyButton, slug, profile);
     if (!profile || !slug) return;
 
-    loadScript("./assets/js/poet-work-shards/" + profile[8] + ".js?v=13").then(function () {
+    loadScript("./assets/js/poet-work-shards/" + profile[8] + ".js?v=15").then(function () {
       var works = (window.POET_WORKS || {})[slug] || [];
       renderSamePoetWorks(id, author, slug, works);
     }).catch(function () {
@@ -399,7 +399,7 @@
       button.setAttribute("aria-busy", "true");
       var original = button.innerHTML;
       button.textContent = "正在载入生平…";
-      loadScript("./assets/js/poets-data.js?v=13").then(function () {
+      loadScript("./assets/js/poets-data.js?v=15").then(function () {
         var poet = (window.POETS_DATA || {})[slug];
         if (!poet) throw new Error("未找到诗人生平");
         document.getElementById("modalName").textContent = poet.name || profile[0];
@@ -453,7 +453,7 @@
   var id = getParam("id");
   var main = document.getElementById("poemMain");
   main.innerHTML = '<p class="section-body" role="status">正在载入诗作…</p>';
-  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=13").then(function () {
+  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=15").then(function () {
     var record = (window.POEM_SHARD || {})[id];
     if (!record) throw new Error("未找到诗作");
     renderPoem(id, record, findPoet(record[1]));

@@ -1009,7 +1009,7 @@ def main():
 
     common.write_js(BUILD_WORK / "poems-data.js", "POEMS_DATA", poems)
     common.write_js(ASSETS / "poets-data.js", "POETS_DATA", poets)
-    common.write_js(ASSETS / "sources-data.js", "SOURCES_DATA", books)
+    common.write_js(BUILD_WORK / "sources-data.js", "SOURCES_DATA", books)
 
     # 页面使用轻量索引和按需分片；保留完整数据包作为生成与校验底库。
     from build_frontend_assets import build_assets

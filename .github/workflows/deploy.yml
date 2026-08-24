@@ -109,7 +109,9 @@ jobs:
           CONFIG=website/admin/config.yml
           if [ -f "$CONFIG" ]; then
             sed -i "s|your-org/shihu-poetry|${GITHUB_REPOSITORY}|g" "$CONFIG"
-            echo "投稿后台指向：$(grep -E '^\s+repo:' "$CONFIG" || true)"
+            # 分支占位同样注入：后台保存动作必须落到真实主干，否则投稿闭环必坏
+            sed -i "s|^  branch: .*|  branch: ${GITHUB_REF_NAME}|" "$CONFIG"
+            echo "投稿后台指向：$(grep -E '^\s+(repo|branch):' "$CONFIG" || true)"
           fi
 
       - name: 配置 Pages
