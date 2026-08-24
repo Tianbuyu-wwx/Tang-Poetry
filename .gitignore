@@ -33,3 +33,5 @@ scripts/tmp_*
 # 内部工作工具数据与损坏的旧 git 元数据（不入公开仓库）
 .workbuddy/
 .git.broken-*/
+scripts/_archive/
+scripts/crawl/
