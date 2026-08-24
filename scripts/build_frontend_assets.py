@@ -22,7 +22,7 @@ WEBSITE = ROOT / "website"
 # 资源版本号：唯一来源。改动任何前端文件后只需在这里 +1，
 # stamp_asset_versions 会统一写进所有 HTML 与带 ?v= 的脚本，
 # 杜绝手工逐页改 v=N 造成漂移（曾出现 v13/v14 并存）。
-SITE_VERSION = 16
+SITE_VERSION = 17
 SITEMAP_MAX_URLS = 40000
 STATIC_SITEMAP_PAGES = [
     "",
@@ -233,13 +233,15 @@ def build_poet_assets(poems: dict, poets: dict) -> tuple[dict, dict[str, int]]:
         ]
         # 详情页瘦身索引：仅保留渲染面包屑/侧栏必需的字段，
         # 生平与简介走 poet-bio-shards 异步加载，避免整包 poets-data.js
-        # 注意 shard 保持 "07" 式零填充字符串，前端直接拼 URL
+        # 注意 shard 保持 "07" 式零填充字符串，前端直接拼 URL；
+        # period 供诗作页署名栏直接显示朝代（slim 里没有完整数据）
         slim_index[slug] = [
             name,
             seal,
             poet.get("nameEn", ""),
             bool(poet.get("life")),
             shard,
+            period,
         ]
         # 生平分片：与作品分片同映射，详情页一次并行拉两小片即可补全诗人资料
         bio_shards[shard][slug] = [
