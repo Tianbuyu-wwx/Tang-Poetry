@@ -35,3 +35,7 @@ scripts/tmp_*
 .git.broken-*/
 scripts/_archive/
 scripts/crawl/
+
+# 字体构建的可下载输入，不入库（build_fonts.py 缺失时自动重新下载）
+scripts/_work/*.otf
+scripts/_work/*.ttf

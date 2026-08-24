@@ -22,7 +22,7 @@ WEBSITE = ROOT / "website"
 # 资源版本号：唯一来源。改动任何前端文件后只需在这里 +1，
 # stamp_asset_versions 会统一写进所有 HTML 与带 ?v= 的脚本，
 # 杜绝手工逐页改 v=N 造成漂移（曾出现 v13/v14 并存）。
-SITE_VERSION = 15
+SITE_VERSION = 16
 SITEMAP_MAX_URLS = 40000
 STATIC_SITEMAP_PAGES = [
     "",
