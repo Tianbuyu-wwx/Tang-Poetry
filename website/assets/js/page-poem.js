@@ -309,7 +309,7 @@
       var more = remaining.length
         ? '<details class="classical-more"><summary>展开其余 ' + remaining.length + ' 条古籍注释</summary><ol class="notes-list">' + renderClassicalNoteList(remaining) + "</ol></details>"
         : "";
-      classicalHtml = '<section class="section classical-commentary"><h2 class="section-title">古籍注释 <span class="en">Classical Annotations</span></h2><p class="classical-intro">以下为公版古籍中的字词、典故、校勘与诗意说明，按相邻诗句唯一匹配；保留古义与异文。</p><ol class="notes-list">' + renderClassicalNoteList(visible) + "</ol>" + more + "</section>";
+      classicalHtml = '<section class="section secondary classical-commentary"><h2 class="section-title">古籍注释 <span class="en">Classical Annotations</span></h2><p class="classical-intro">以下为公版古籍中的字词、典故、校勘与诗意说明，按相邻诗句唯一匹配；保留古义与异文。</p><ol class="notes-list">' + renderClassicalNoteList(visible) + "</ol>" + more + "</section>";
     }
 
     var classicalAppreciationHtml = "";
@@ -319,7 +319,7 @@
       var appreciationMore = remainingAppreciations.length
         ? '<details class="classical-more"><summary>展开其余 ' + remainingAppreciations.length + ' 条古籍赏评</summary><ol class="notes-list">' + renderClassicalNoteList(remainingAppreciations) + "</ol></details>"
         : "";
-      classicalAppreciationHtml = '<section class="section classical-appreciation"><h2 class="section-title">古籍赏评 <span class="en">Classical Appreciation</span></h2><p class="classical-intro">以下为公版选本与诗话中的古代品评，侧重章法、风格、炼字与历代接受；它与现代赏析分栏展示。</p><ol class="notes-list">' + renderClassicalNoteList(visibleAppreciations) + "</ol>" + appreciationMore + "</section>";
+      classicalAppreciationHtml = '<section class="section secondary classical-appreciation"><h2 class="section-title">古籍赏评 <span class="en">Classical Appreciation</span></h2><p class="classical-intro">以下为公版选本与诗话中的古代品评，侧重章法、风格、炼字与历代接受；它与现代赏析分栏展示。</p><ol class="notes-list">' + renderClassicalNoteList(visibleAppreciations) + "</ol>" + appreciationMore + "</section>";
     }
 
     var appreciationHtml = "";
@@ -339,7 +339,7 @@
 
     var sourcesHtml = "";
     if (sources.length) {
-      sourcesHtml = '<section class="section"><h2 class="section-title">出处溯源 <span class="en">Sources</span></h2><ul class="sources-list">' + sources.map(function (item) { return "<li>" + esc(item) + "</li>"; }).join("") + "</ul></section>";
+      sourcesHtml = '<section class="section secondary"><h2 class="section-title">出处溯源 <span class="en">Sources</span></h2><ul class="sources-list">' + sources.map(function (item) { return "<li>" + esc(item) + "</li>"; }).join("") + "</ul></section>";
     }
 
     main.innerHTML =
@@ -374,14 +374,14 @@
     if (!profile || !slug) return;
 
     // 简介/同作者列表随对应分片异步补全，不阻塞正文渲染
-    loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=19").then(function () {
+    loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=20").then(function () {
       var bio = (window.POET_BIO || {})[slug];
       if (!bio) return;
       var summaryBox = document.getElementById("asideSummary");
       if (summaryBox && bio[1]) summaryBox.textContent = bio[1];
     }).catch(function () { /* 侧栏简介缺失不影响正文 */ });
 
-    loadScript("./assets/js/poet-work-shards/" + profile[4] + ".js?v=19").then(function () {
+    loadScript("./assets/js/poet-work-shards/" + profile[4] + ".js?v=20").then(function () {
       var works = (window.POET_WORKS || {})[slug] || [];
       renderSamePoetWorks(id, author, slug, works);
     }).catch(function () {
@@ -415,7 +415,7 @@
       var original = button.innerHTML;
       button.textContent = "正在载入生平…";
       // 生平数据在 bio 分片（约 33KB/片）；分片已随侧栏加载，此处通常直接命中
-      loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=19").then(function () {
+      loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=20").then(function () {
         var bio = (window.POET_BIO || {})[slug];
         if (!bio) throw new Error("未找到诗人生平");
         document.getElementById("modalName").textContent = profile[0] || "";
@@ -469,7 +469,7 @@
   var id = getParam("id");
   var main = document.getElementById("poemMain");
   main.innerHTML = '<p class="section-body" role="status">正在载入诗作…</p>';
-  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=19").then(function () {
+  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=20").then(function () {
     var record = (window.POEM_SHARD || {})[id];
     if (!record) throw new Error("未找到诗作");
     renderPoem(id, record, findPoet(record[1]));

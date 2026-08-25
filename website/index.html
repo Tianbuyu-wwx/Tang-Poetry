@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="assets/js/brand.js?v=19"></script>
+<script src="assets/js/brand.js?v=20"></script>
 <title>石湖诗社</title>
 <link rel="preload" href="assets/fonts/noto-sc-000.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/fonts.css?v=19">
+<link rel="stylesheet" href="assets/css/fonts.css?v=20">
 <style>
   :root {
     --paper: #faf6ed;
@@ -358,8 +358,8 @@
   </div>
 </section>
 
-<script src="assets/js/site-meta.js?v=19" defer></script>
-<script src="assets/js/famous-lines.js?v=19" defer></script>
+<script src="assets/js/site-meta.js?v=20" defer></script>
+<script src="assets/js/famous-lines.js?v=20" defer></script>
 <script>
   // 等待 defer 脚本执行后再填充数据
   document.addEventListener('DOMContentLoaded', function() {
@@ -371,16 +371,42 @@
     }
 
     if (!window.FAMOUS_LINES || window.FAMOUS_LINES.length === 0) return;
-    var idx = Math.floor(Math.random() * window.FAMOUS_LINES.length);
-    var item = window.FAMOUS_LINES[idx];
     var quoteEl = document.getElementById('heroQuote');
     var sourceEl = document.getElementById('heroQuoteSource');
-    if (quoteEl && item.line) {
-      var line = item.line.replace(/，/g, '，<br>');
-      quoteEl.innerHTML = line;
+    if (!quoteEl || !sourceEl) return;
+    var pool = window.FAMOUS_LINES.filter(function (x) { return x.line; });
+    if (!pool.length) return;
+    // 首屏随机起句，之后每 9s 淡出淡入轮换；带 id 的名句可点击直达诗页
+    var idx = Math.floor(Math.random() * pool.length);
+    function render(item) {
+      quoteEl.innerHTML = item.line.replace(/，/g, '，<br>');
+      if (item.id) {
+        sourceEl.innerHTML = '';
+        var a = document.createElement('a');
+        a.href = './poem.html?id=' + encodeURIComponent(item.id);
+        a.textContent = item.source || '';
+        a.style.color = 'inherit';
+        a.style.textDecoration = 'none';
+        a.style.borderBottom = '1px solid rgba(168,50,50,0.35)';
+        sourceEl.appendChild(a);
+      } else {
+        sourceEl.textContent = item.source || '';
+      }
     }
-    if (sourceEl && item.source) {
-      sourceEl.textContent = item.source;
+    render(pool[idx]);
+    if (pool.length > 1) {
+      setInterval(function () {
+        quoteEl.style.transition = 'opacity .8s ease';
+        sourceEl.style.transition = 'opacity .8s ease';
+        quoteEl.style.opacity = '0';
+        sourceEl.style.opacity = '0';
+        setTimeout(function () {
+          idx = (idx + 1 + Math.floor(Math.random() * 3)) % pool.length;
+          render(pool[idx]);
+          quoteEl.style.opacity = '1';
+          sourceEl.style.opacity = '1';
+        }, 800);
+      }, 9000);
     }
   });
 </script>
@@ -396,10 +422,10 @@
     else window.addEventListener('load', addMountainBg);
   })();
 </script>
-<script src="assets/js/register-sw.js?v=19" defer></script>
-<script src="assets/js/web-vitals.js?v=19" defer></script>
-<script src="assets/js/lazy-load.js?v=19" defer></script>
-<script src="assets/js/back-to-top.js?v=19" defer></script>
+<script src="assets/js/register-sw.js?v=20" defer></script>
+<script src="assets/js/web-vitals.js?v=20" defer></script>
+<script src="assets/js/lazy-load.js?v=20" defer></script>
+<script src="assets/js/back-to-top.js?v=20" defer></script>
 
 </body>
 </html>

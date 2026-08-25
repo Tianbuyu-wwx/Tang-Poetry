@@ -295,6 +295,28 @@ article.poem { min-width: 0; }
 /* —— 章节通用 —— */
 .section { margin: 2.8rem 0; }
 
+/* 次级 section（古籍注释/古籍赏评/出处溯源）：与主 section 拉开层级，
+   长页面滚动时有主次节奏 */
+.section.secondary {
+  margin: 2.2rem 0;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--rule);
+}
+.section.secondary .section-title {
+  font-size: 17px;
+  letter-spacing: 3px;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.section.secondary .section-title::before {
+  width: 14px; height: 14px;
+  background: var(--gold);
+  box-shadow: none;
+}
+.section.secondary .section-title .en { font-size: 10px; }
+.section.secondary .notes-list { font-size: 14px; }
+.section.secondary .classical-intro { font-size: 12px; }
+
 .section-title {
   display: flex;
   align-items: center;

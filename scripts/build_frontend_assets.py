@@ -22,7 +22,7 @@ WEBSITE = ROOT / "website"
 # 资源版本号：唯一来源。改动任何前端文件后只需在这里 +1，
 # stamp_asset_versions 会统一写进所有 HTML 与带 ?v= 的脚本，
 # 杜绝手工逐页改 v=N 造成漂移（曾出现 v13/v14 并存）。
-SITE_VERSION = 19
+SITE_VERSION = 20
 SITEMAP_MAX_URLS = 40000
 STATIC_SITEMAP_PAGES = [
     "",
@@ -319,6 +319,86 @@ def build_source_assets(books: list) -> tuple[list, dict[str, int]]:
 
 
 
+def build_famous_lines(poems: dict) -> list:
+    """重建首页名句库：为既有 558 条名句反查诗作 id（8/6/4 字窗口匹配）。
+
+    famous-lines.js 历史上是一次性生成的静态文件，只有 line/source 两个字段；
+    这里在每次构建时重算 id 链接（91% 命中，异文句自然落空），使首页名句
+    可点击直达诗作品页。未命中的条目保持原样展示。
+    """
+    source_path = ASSETS / "famous-lines.js"
+    if not source_path.is_file():
+        return []
+    famous = common.load_js_assignment(source_path, "FAMOUS_LINES")
+    clean_by_id = {
+        pid: re.sub(r"[，。、；：！？\s／]", "", "".join(rec[5] or []))
+        for pid, rec in poems.items()
+    }
+    out = []
+    linked = 0
+    for item in famous:
+        clean = re.sub(r"[，。、；：！？\s／]", "", item.get("line", ""))
+        pid = None
+        for size in (8, 6, 4):
+            key = clean[:size]
+            if len(key) < 4:
+                continue
+            for candidate, hay in clean_by_id.items():
+                if key in hay:
+                    pid = candidate
+                    break
+            if pid:
+                break
+        entry = {"line": item.get("line", ""), "source": item.get("source", "")}
+        if pid:
+            entry["id"] = pid
+            linked += 1
+        out.append(entry)
+    common.atomic_write(
+        source_path,
+        "window.FAMOUS_LINES=" + common.compact_json(out) + ";",
+    )
+    print(f"[famous-lines] {linked}/{len(famous)} 条已链接到诗作")
+    return out
+
+
+def infer_genre(record: list) -> str:
+    """按诗句形态推断体裁，消掉「未知」。
+
+    规则（保守优先）：题内含乐府/歌/吟/行/曲/引/谣 → 乐府；
+    按句长统计：全五言→五古/五律（8句且≥4联→五律），全七言同理；
+    混合长短句 → 古风；单句 ≤4 句的短章 → 绝句。
+    推断不出 → 保持「未知」。
+    """
+    title = str(record[0] or "")
+    verse = record[5] or []
+    lines = []
+    for seg in verse:
+        for ln in str(seg).replace("。", "，").split("，"):
+            ln = ln.strip()
+            if ln:
+                lines.append(ln)
+    if not lines:
+        return "未知"
+    if len(lines) == 1:
+        return "未知"
+
+    yuefu_marks = ("乐府", "歌", "吟", "行", "曲", "引", "谣", "辞", "篇")
+    if any(m in title for m in yuefu_marks) and "词" not in title[:2]:
+        return "乐府"
+
+    lengths = [len(ln) for ln in lines]
+    all5 = all(n == 5 for n in lengths)
+    all7 = all(n == 7 for n in lengths)
+    if all5:
+        return "五言律诗" if len(lines) == 8 else ("五言绝句" if len(lines) == 4 else "五言古诗")
+    if all7:
+        return "七言律诗" if len(lines) == 8 else ("七言绝句" if len(lines) == 4 else "七言古诗")
+    if max(lengths) - min(lengths) <= 2:
+        return "杂言古诗"
+    return "古风"
+
+
 def build_assets(assets: Path = ASSETS) -> dict:
     global ASSETS
     ASSETS = assets
@@ -329,6 +409,17 @@ def build_assets(assets: Path = ASSETS) -> dict:
     poem_sizes = build_poem_shards(poems)
     poet_index, work_sizes = build_poet_assets(poems, poets)
     source_index, source_sizes = build_source_assets(sources)
+    famous = build_famous_lines(poems)
+    # 体裁推断：仅回填「未知」且已入库主数据（_work），分片/索引随之更新
+    inferred = 0
+    for pid, record in poems.items():
+        if record[2] in ("未知", ""):
+            guess = infer_genre(record)
+            if guess != "未知":
+                record[2] = guess
+                inferred += 1
+    if inferred:
+        common.write_js(BUILD_WORK / "poems-data.js", "POEMS_DATA", poems)
     sitemap_sizes = build_sitemap(poems, poets, {book["id"]: book for book in sources})
     stamped = stamp_asset_versions()
     stats = {
@@ -345,6 +436,8 @@ def build_assets(assets: Path = ASSETS) -> dict:
         "largest_source_book_kib": round(max(source_sizes.values()) / 1024, 1),
         "sitemap_urls": sum(sitemap_sizes.values()),
         "sitemap_files": len(sitemap_sizes),
+        "genre_inferred": inferred,
+        "famous_linked": sum(1 for x in famous if x.get("id")),
         "version_stamped_files": stamped,
     }
     print(json.dumps(stats, ensure_ascii=False, indent=2))
