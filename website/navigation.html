@@ -57,7 +57,13 @@
   .topbar .logo-text .t1 { font-family: "ZCOOL XiaoWei", "STKaiti", serif; font-size: 18px; font-weight: 700; letter-spacing: 3px; color: var(--ink-deep); }
   .topbar .logo-text .t2 { font-family: "Noto Serif SC", serif; font-size: 9px; letter-spacing: 2px; color: var(--ink-light); text-transform: uppercase; margin-top: 1px; }
   .topbar nav { display: flex; gap: 1.5rem; }
-  .topbar nav a { color: var(--ink-light); text-decoration: none; font-family: "ZCOOL XiaoWei", serif; font-size: 14px; letter-spacing: 2px; transition: color 0.2s; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  .topbar nav a { color: var(--ink-light); text-decoration: none; font-family: "ZCOOL XiaoWei", serif; font-size: 14px; letter-spacing: 2px; transition: color 0.2s; border-bottom: 1px solid transparent; padding-bottom: 2px; white-space: nowrap; }
+  @media (max-width: 760px) {
+    .topbar { padding: 0.7rem 1rem; }
+    .topbar nav { display: flex; gap: 0.9rem; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+    .topbar nav::-webkit-scrollbar { display: none; }
+    .topbar nav a { font-size: 13px; flex: 0 0 auto; }
+  }
   .topbar nav a:hover, .topbar nav a.current { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
   .footer { text-align: center; padding: 2rem; color: var(--ink-light); font-size: 13px; border-top: 1px solid var(--rule); margin-top: 4rem; font-family: "ZCOOL XiaoWei", serif; letter-spacing: 2px; position: relative; z-index: 2; }
 </style>
