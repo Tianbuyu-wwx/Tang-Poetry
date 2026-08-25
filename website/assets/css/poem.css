@@ -10,8 +10,8 @@
   --paper-warm: #f7f0db;
   --ink: #1a1a1a;
   --ink-deep: #0a0a0a;
-  --ink-light: #7a7a7a;
-  --ink-faint: #b8b3a6;
+  --ink-light: #6b6b6b;
+  --ink-faint: #a89f8e;
   --cinnabar: #a83232;
   --cinnabar-deep: #7a2828;
   --cinnabar-bright: #c44040;
@@ -176,6 +176,22 @@ body::before {
     padding: 1rem 1.2rem;
   }
   .topbar-center { display: none; }
+  /* 导航条目不再逐字断行：压缩内边距+字距，放不下时整条横滚 */
+  .topbar-right {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+  .topbar-right::-webkit-scrollbar { display: none; }
+  .topbar-right .nav-link {
+    white-space: nowrap;
+    letter-spacing: 2px;
+    padding: 0.4rem 0.7rem;
+    font-size: 13px;
+    flex: 0 0 auto;
+  }
 }
 
 /* ========== 主版心 ========== */
@@ -801,7 +817,8 @@ html {
   .poem-title { font-size: 54px; letter-spacing: 6px; }
   .poem-text .verse { font-size: 24px; letter-spacing: 3px; }
   .poem-text { padding-left: 0; }
-  .poem-text::before { left: -18px; }
+  /* 移动端容器贴边，装饰墨点会溢出成游离黑点，直接隐藏 */
+  .poem-text::before { display: none; }
   .famous-lines .line { font-size: 18px; }
   aside.poet-aside { position: static; }
 }

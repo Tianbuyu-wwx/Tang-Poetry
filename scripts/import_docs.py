@@ -303,6 +303,48 @@ def best_source_biography(candidates):
     return (unique_variants[0] if unique_variants else ""), unique_cbdb[:1], statuses
 
 
+def _clean_name_en(value) -> str:
+    """nameEn 只保留拼音形态（拉丁字母/空格/连字符/点/括号内 ASCII）。
+
+    历史数据曾把「Du Fu · 712—770」「Zhang Ji (文昌) · 766—830」这类
+    混合串塞进 nameEn，导致前端署名行生卒年重复。这里剥掉生卒年、
+    中文字符与间隔号，只留干净的拼音名。
+    """
+    import re
+
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    text = re.sub(r"\d{3,4}\s*[—–-]\s*\d{0,4}", "", text)  # 生卒年
+    text = re.sub(r"[\u4e00-\u9fff·，。；：]+", "", text)  # 中文与全角间隔号
+    text = re.sub(r"\s{2,}", " ", text).strip(" ·-")
+    return text
+
+
+VALID_DYNASTIES = ("初唐", "盛唐", "中唐", "晚唐", "唐", "五代", "宋", "今")
+
+
+def _clean_dynasty(existing: dict, sub: str) -> str:
+    """dynasty 必须是标准朝代词。
+
+    历史数据曾把表字（如「字云卿」）写进 dynasty。清洗顺序：
+    1) existing.dynasty 本身是标准词 → 直接用
+    2) 从 sub 尾部反推（sub 形如「字XX · 656—715 · 初唐」）
+    3) 都没有 → 「唐」
+    """
+    import re
+
+    current = str(existing.get("dynasty", "")).strip()
+    if current in VALID_DYNASTIES:
+        return current
+    tail = str(sub or "").split("·")[-1].strip()
+    if tail in VALID_DYNASTIES:
+        return tail
+    if re.search(r"\d{3,4}\s*[—–-]\s*\d{3,4}", str(sub or "")):
+        return "唐"  # 有生卒年即可断为唐代，具体分期存疑时不硬标
+    return "唐"
+
+
 def build_poets(old_poets: dict, biography_data: dict, poem_records: dict):
     old_by_name = {}
     old_slug_by_name = {}
@@ -371,8 +413,8 @@ def build_poets(old_poets: dict, biography_data: dict, poem_records: dict):
         result[slug] = {
             "sealChar": name[0] if name else "唐",
             "name": name,
-            "nameEn": existing.get("nameEn", ""),
-            "dynasty": existing.get("dynasty", "唐"),
+            "nameEn": _clean_name_en(existing.get("nameEn", "")),
+            "dynasty": _clean_dynasty(existing, existing.get("sub", "")),
             "summary": summary,
             "life": life,
             "sub": existing.get("sub", ""),

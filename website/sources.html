@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="assets/js/brand.js?v=17"></script>
+<script src="assets/js/brand.js?v=18"></script>
 <title>典籍资料 · 石湖诗社</title>
-<link rel="preload" href="assets/css/poem.css?v=17" as="style">
+<link rel="preload" href="assets/css/poem.css?v=18" as="style">
 
 <link rel="preload" href="assets/fonts/noto-sc-000.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/fonts.css?v=17">
-<link rel="stylesheet" href="assets/css/poem.css?v=17">
+<link rel="stylesheet" href="assets/css/fonts.css?v=18">
+<link rel="stylesheet" href="assets/css/poem.css?v=18">
 <style>
   .library { max-width: 1180px; margin: 0 auto; padding: 3rem 3rem 5rem; position: relative; z-index: 1; }
   .library-head { text-align: center; margin-bottom: 2.5rem; }
@@ -46,12 +46,12 @@
 <header class="topbar">
   <a class="logo" href="index.html"><div class="logo-seal"><span data-brand="hero-seal">石</span></div><div class="logo-text"><div class="t1" data-brand="nav-name">石湖诗社</div><div class="t2" data-brand="nav-en">Shihu Poetry Society</div></div></a>
   <div class="topbar-center"><div class="crumb"><a href="index.html">首页</a><span class="sep">›</span><span>典籍资料</span></div></div>
-  <div class="topbar-right"><a class="nav-link" href="poets.html">诗人</a><a class="nav-link" href="members.html">社员</a><a class="nav-link" href="navigation.html">检索</a><a class="nav-link" href="society.html">社务</a></div>
+  <div class="topbar-right"><a class="nav-link" href="index.html">首页</a><a class="nav-link" href="navigation.html">检索</a><a class="nav-link" href="poets.html">诗人</a><a class="nav-link" href="members.html">社员</a><a class="nav-link current" href="sources.html">典籍</a><a class="nav-link" href="society.html">社务</a><a class="nav-link" href="about.html">关于</a></div>
 </header>
 <main class="library" id="library"></main>
 <footer class="site"><div class="seal-line"><span class="mini-seal" data-brand="seal-left">石</span><span data-brand="footer-name">石湖诗社</span><span class="mini-seal" data-brand="seal-right">社</span></div><div>古代原著为公版；维基文库录入依 CC BY-SA 4.0 使用</div><div data-brand="copyright">© 2026 石湖诗社 · 仅用于学习与赏析</div></footer>
-<script src="assets/js/sources-index.js?v=17" defer></script>
-<script src="assets/js/page-sources.js?v=17" defer></script>
+<script src="assets/js/sources-index.js?v=18" defer></script>
+<script src="assets/js/page-sources.js?v=18" defer></script>
 <script>
 (function(){
   "use strict";
@@ -81,9 +81,9 @@
   var bookId=param("book"),chapter=parseInt(param("chapter"),10),book=null;for(var i=0;i<books.length;i++)if(books[i].id===bookId)book=books[i];if(book&&!isNaN(chapter))renderReader(book,chapter);else renderHome();
 })();
 </script>
-<script src="assets/js/register-sw.js?v=17" defer></script>
-<script src="assets/js/web-vitals.js?v=17" defer></script>
-<script src="assets/js/lazy-load.js?v=17" defer></script>
-<script src="assets/js/back-to-top.js?v=17" defer></script>
+<script src="assets/js/register-sw.js?v=18" defer></script>
+<script src="assets/js/web-vitals.js?v=18" defer></script>
+<script src="assets/js/lazy-load.js?v=18" defer></script>
+<script src="assets/js/back-to-top.js?v=18" defer></script>
 </body>
 </html>
