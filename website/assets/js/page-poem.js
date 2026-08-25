@@ -374,14 +374,14 @@
     if (!profile || !slug) return;
 
     // 简介/同作者列表随对应分片异步补全，不阻塞正文渲染
-    loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=18").then(function () {
+    loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=19").then(function () {
       var bio = (window.POET_BIO || {})[slug];
       if (!bio) return;
       var summaryBox = document.getElementById("asideSummary");
       if (summaryBox && bio[1]) summaryBox.textContent = bio[1];
     }).catch(function () { /* 侧栏简介缺失不影响正文 */ });
 
-    loadScript("./assets/js/poet-work-shards/" + profile[4] + ".js?v=18").then(function () {
+    loadScript("./assets/js/poet-work-shards/" + profile[4] + ".js?v=19").then(function () {
       var works = (window.POET_WORKS || {})[slug] || [];
       renderSamePoetWorks(id, author, slug, works);
     }).catch(function () {
@@ -415,7 +415,7 @@
       var original = button.innerHTML;
       button.textContent = "正在载入生平…";
       // 生平数据在 bio 分片（约 33KB/片）；分片已随侧栏加载，此处通常直接命中
-      loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=18").then(function () {
+      loadScript("./assets/js/poet-bio-shards/" + profile[4] + ".js?v=19").then(function () {
         var bio = (window.POET_BIO || {})[slug];
         if (!bio) throw new Error("未找到诗人生平");
         document.getElementById("modalName").textContent = profile[0] || "";
@@ -469,7 +469,7 @@
   var id = getParam("id");
   var main = document.getElementById("poemMain");
   main.innerHTML = '<p class="section-body" role="status">正在载入诗作…</p>';
-  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=18").then(function () {
+  loadScript("./assets/js/poem-shards/" + poemShardName(id) + ".js?v=19").then(function () {
     var record = (window.POEM_SHARD || {})[id];
     if (!record) throw new Error("未找到诗作");
     renderPoem(id, record, findPoet(record[1]));

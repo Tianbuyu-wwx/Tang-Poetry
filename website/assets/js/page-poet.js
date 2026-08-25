@@ -58,11 +58,19 @@
 
   // 生平与作品两个分片并行加载，谁后到谁补全标题行（避免竞态把存诗数写成 0）
   function refreshPen() {
-    var parts = [nameEn || "", bioInfo ? (bioInfo[4] || "") : ""].filter(Boolean);
+    var sub = bioInfo ? (bioInfo[4] || "") : "";
     var dynasty = bioInfo ? (bioInfo[3] || "") : "";
-    if (dynasty) parts.push(dynasty === "唐" ? "唐代" : dynasty);
+    var parts = [nameEn || ""];
+    if (sub) {
+      // sub 形如「字子美 · 号少陵野老 · 712—770 · 盛唐」，可能已含朝代
+      var dynastyInSub = dynasty && sub.indexOf(dynasty) !== -1;
+      parts.push(sub);
+      if (!dynastyInSub && dynasty) parts.push(dynasty === "唐" ? "唐代" : dynasty);
+    } else if (dynasty) {
+      parts.push(dynasty === "唐" ? "唐代" : dynasty);
+    }
     parts.push("存诗 " + works.length + " 首");
-    document.getElementById("poetPen").textContent = parts.join(" · ");
+    document.getElementById("poetPen").textContent = parts.filter(Boolean).join(" · ");
   }
 
   function renderWorks() {
@@ -85,7 +93,7 @@
   });
 
   // 作品分片：渲染列表并回填存诗数
-  loadScript("./assets/js/poet-work-shards/" + shard + ".js?v=18").then(function () {
+  loadScript("./assets/js/poet-work-shards/" + shard + ".js?v=19").then(function () {
     works = (window.POET_WORKS || {})[slug] || [];
     renderWorks();
   }).catch(function () {
@@ -93,7 +101,7 @@
   });
 
   // 生平分片（约 33KB/片）：补全年代、简介、生平与资料来源
-  loadScript("./assets/js/poet-bio-shards/" + shard + ".js?v=18").then(function () {
+  loadScript("./assets/js/poet-bio-shards/" + shard + ".js?v=19").then(function () {
     var bio = (window.POET_BIO || {})[slug];
     if (!bio) throw new Error("no bio");
     bioInfo = bio;
