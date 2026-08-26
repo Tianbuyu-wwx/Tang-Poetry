@@ -22,7 +22,7 @@ WEBSITE = ROOT / "website"
 # 资源版本号：唯一来源。改动任何前端文件后只需在这里 +1，
 # stamp_asset_versions 会统一写进所有 HTML 与带 ?v= 的脚本，
 # 杜绝手工逐页改 v=N 造成漂移（曾出现 v13/v14 并存）。
-SITE_VERSION = 20
+SITE_VERSION = 21
 SITEMAP_MAX_URLS = 40000
 STATIC_SITEMAP_PAGES = [
     "",
@@ -72,6 +72,72 @@ def _sitemap_xml(urls: list) -> str:
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         f"{body}</urlset>\n"
     )
+
+
+def inject_site_jsonld() -> int:
+    """向全部静态页 <head> 注入全站层 JSON-LD 与 og:image 默认卡（幂等）。
+
+    - WebSite + SearchAction：检索页 navigation.html 支持 ?q= 直达
+    - Organization：站点身份
+    - og:image / twitter:card：默认分享卡 og/default.png
+    已有注入标记时先移除旧块再写入，保证重复构建不堆叠。
+    """
+    base = pages_base_url()
+    marker_start = "<!-- jsonld:site -->"
+    marker_end = "<!-- /jsonld:site -->"
+    website_block = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "石湖诗社",
+        "alternateName": "Shihu Poetry Society",
+        "url": base + "/",
+        "inLanguage": "zh-Hans",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": f"{base}/navigation.html?q={ '{search_term_string}' }",
+            },
+            "query-input": "required name=search_term_string",
+        },
+    }
+    org_block = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "石湖诗社",
+        "alternateName": "Shihu Poetry Society",
+        "url": base + "/",
+        "logo": f"{base}/og/default.png",
+        "description": "全唐诗静态鉴赏站：收录《全唐诗》57,676 首，逐诗笺注、古籍互证、名句赏析。",
+    }
+    scripts = (
+        marker_start
+        + "\n<script type=\"application/ld+json\">"
+        + json.dumps(website_block, ensure_ascii=False, separators=(",", ":"))
+        + "</script>"
+        + "\n<script type=\"application/ld+json\">"
+        + json.dumps(org_block, ensure_ascii=False, separators=(",", ":"))
+        + "</script>"
+        + "\n"
+        + marker_end
+    )
+    changed = 0
+    for page in sorted(WEBSITE.glob("*.html")):
+        text = page.read_text(encoding="utf-8")
+        # 清掉旧块（含跨行）
+        text = re.sub(
+            re.escape(marker_start) + r"[\s\S]*?" + re.escape(marker_end) + "\n?",
+            "",
+            text,
+        )
+        og_image = f'<meta property="og:image" content="{base}/og/default.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n'
+        text = re.sub(r'<meta property="og:image"[^>]*>\n?(<meta property="og:image:(?:width|height)"[^>]*>\n?)*(<meta name="twitter:card"[^>]*>\n?)?', "", text)
+        if "</head>" in text:
+            text = text.replace("</head>", og_image + scripts + "\n</head>", 1)
+            page.write_text(text, encoding="utf-8")
+            changed += 1
+    print(f"[jsonld-site] injected into {changed} pages")
+    return changed
 
 
 def build_sitemap(poems: dict, poets: dict, sources: dict) -> dict:
@@ -399,6 +465,74 @@ def infer_genre(record: list) -> str:
     return "古风"
 
 
+def build_og_images(poems: dict, poets: dict) -> dict:
+    """委托给独立模块，避免本文件继续膨胀；返回 {文件名: 字节数}。"""
+    from build_og_images import build_og_images as _build
+
+    return _build(poems, poets)
+
+
+def build_jsonld(poems: dict, poets: dict, sources: list) -> dict:
+    """生成静态 JSON-LD 结构化数据（爬虫不执行 JS，必须落盘在 HTML head）。
+
+    - 每首诗一个分片文件 assets/jsonld/<id>.json（Article + CreativeWork 语义）
+    - 全站层：WebSite + SearchAction（检索页 ?q= 直达）、Organization
+    - 12 个静态页的 JSON-LD 在 HTML 模板注入（build_assets 里处理）
+    """
+    out_dir = ASSETS / "jsonld"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for stale in out_dir.glob("*.json"):
+        stale.unlink()
+    base = pages_base_url()
+    count = 0
+    sizes: dict[str, int] = {}
+    for pid, record in poems.items():
+        title = str(record[0] or "")
+        poet = str(record[1] or "")
+        verse = [str(v) for v in (record[5] or []) if str(v).strip()]
+        genre = record[2] if record[2] != "未知" else None
+        appreciation = record[8] or {}
+        periodical = [str(s) for s in (record[10] or [])]
+        data = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "@id": f"{base}/poem.html?id={pid}",
+            "headline": f"{title} · {poet}",
+            "name": title,
+            "inLanguage": "zh-Hans",
+            "text": "\n".join(verse),
+            "author": {"@type": "Person", "name": poet, "nationality": "唐"},
+            "publisher": {
+                "@type": "Organization",
+                "name": "石湖诗社",
+                "url": base + "/",
+            },
+            "image": f"{base}/og/{pid}.png",
+            "mainEntityOfPage": f"{base}/poem.html?id={pid}",
+            "isPartOf": {"@type": "WebSite", "name": "石湖诗社", "url": base + "/"},
+        }
+        if genre:
+            data["genre"] = genre
+        abstract_parts = []
+        if appreciation.get("text"):
+            abstract_parts.append(str(appreciation["text"])[:150])
+        if periodical:
+            abstract_parts.append("收录于" + "、".join(periodical))
+        if abstract_parts:
+            data["abstract"] = "。".join(abstract_parts)
+        if appreciation.get("source"):
+            data["citation"] = str(appreciation["source"])
+        path = out_dir / f"{pid}.json"
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        sizes[f"{pid}.json"] = path.stat().st_size
+        count += 1
+    print(f"[jsonld] {count} poem documents")
+    return sizes
+
+
 def build_assets(assets: Path = ASSETS) -> dict:
     global ASSETS
     ASSETS = assets
@@ -410,6 +544,9 @@ def build_assets(assets: Path = ASSETS) -> dict:
     poet_index, work_sizes = build_poet_assets(poems, poets)
     source_index, source_sizes = build_source_assets(sources)
     famous = build_famous_lines(poems)
+    og_sizes = build_og_images(poems, poets)
+    jsonld_sizes = build_jsonld(poems, poets, sources)
+    injected_pages = inject_site_jsonld()
     # 体裁推断：仅回填「未知」且已入库主数据（_work），分片/索引随之更新
     inferred = 0
     for pid, record in poems.items():
@@ -438,6 +575,10 @@ def build_assets(assets: Path = ASSETS) -> dict:
         "sitemap_files": len(sitemap_sizes),
         "genre_inferred": inferred,
         "famous_linked": sum(1 for x in famous if x.get("id")),
+        "og_images": len(og_sizes),
+        "og_total_kib": round(sum(og_sizes.values()) / 1024),
+        "jsonld_docs": len(jsonld_sizes),
+        "jsonld_pages_injected": injected_pages,
         "version_stamped_files": stamped,
     }
     print(json.dumps(stats, ensure_ascii=False, indent=2))

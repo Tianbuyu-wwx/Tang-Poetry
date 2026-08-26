@@ -22,7 +22,7 @@
     if (loadedBooks[bookId]) return loadedBooks[bookId];
     loadedBooks[bookId] = new Promise(function (resolve, reject) {
       var script = document.createElement("script");
-      script.src = "assets/js/source-books/" + bookId + ".js?v=20";
+      script.src = "assets/js/source-books/" + bookId + ".js?v=21";
       script.async = true;
       script.onload = function () { resolve(window.SOURCE_BOOKS[bookId]); };
       script.onerror = function () { reject(new Error("无法载入典籍")); };

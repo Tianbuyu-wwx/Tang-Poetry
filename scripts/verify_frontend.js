@@ -23,14 +23,19 @@ for (const file of filesUnder(jsDirectory, ".js")) {
   console.log(`[OK] JavaScript：${path.relative(root, file)}`);
 }
 
-const inlinePattern = /<script(?![^>]*\bsrc\s*=)[^>]*>([\s\S]*?)<\/script>/gi;
+const inlinePattern = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
 for (const file of filesUnder(website, ".html")) {
   const html = fs.readFileSync(file, "utf8");
   let match;
   let inline = 0;
   while ((match = inlinePattern.exec(html)) !== null) {
-    if (!match[1].trim()) continue;
-    new Function(match[1]);
+    const attrs = match[1];
+    // 跳过外链脚本与 JSON-LD（type="application/ld+json" 不是 JS）
+    if (/\bsrc\s*=/.test(attrs)) continue;
+    if (/type\s*=\s*["']application\/ld\+json["']/i.test(attrs)) continue;
+    const code = match[2];
+    if (!code.trim()) continue;
+    new Function(code);
     inline += 1;
     checked += 1;
   }

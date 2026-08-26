@@ -93,7 +93,7 @@
   });
 
   // 作品分片：渲染列表并回填存诗数
-  loadScript("./assets/js/poet-work-shards/" + shard + ".js?v=20").then(function () {
+  loadScript("./assets/js/poet-work-shards/" + shard + ".js?v=21").then(function () {
     works = (window.POET_WORKS || {})[slug] || [];
     renderWorks();
   }).catch(function () {
@@ -101,7 +101,7 @@
   });
 
   // 生平分片（约 33KB/片）：补全年代、简介、生平与资料来源
-  loadScript("./assets/js/poet-bio-shards/" + shard + ".js?v=20").then(function () {
+  loadScript("./assets/js/poet-bio-shards/" + shard + ".js?v=21").then(function () {
     var bio = (window.POET_BIO || {})[slug];
     if (!bio) throw new Error("no bio");
     bioInfo = bio;
